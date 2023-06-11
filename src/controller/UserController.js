@@ -45,9 +45,13 @@ class UserController{
         }
 
         return res.status(401).json({message: 'id not found'});
+    }
+
+    static async deleteUser(req, res){
+        const {id} = req.body;
+        const deleted = await DataBaseOperationsUser.deleteUser(id);
         
-
-
+        res.status(201).json({success: 'deleted'});
     }
 }
 

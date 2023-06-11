@@ -6,6 +6,7 @@ userRouter.get('/user', UserController.getUser)
 userRouter.get('/users', UserController.getAllUser)
 userRouter.post('/register', Middle.verifyFieldsUserIsEmpty, UserController.registerUser);
 userRouter.patch('/update', UserController.updateUser);
+userRouter.delete('/delete', UserController.deleteUser);
 
 
 module.exports = userRouter;

@@ -39,6 +39,12 @@ class DatabaseOperationsUser {
         const update = await db.exec(sql);
         return update;
     }
+
+    static async deleteUser(Id) {
+        const db = await DatabaseOperation.openDbConnection();
+        const deleted = await db.exec(`DELETE FROM tbl_User WHERE Id = ${Id}`);
+        return deleted;
+    }
 }
 
 module.exports = DatabaseOperationsUser;
