@@ -32,16 +32,20 @@ class UserController{
         const {id, name, phone, type, login, password, key} = req.body;
 
         const userForUpdate = await DataBaseOperationsUser.getUser(id);
+        if(userForUpdate){
+            userForUpdate.Name = name;
+            userForUpdate.Phone = phone;
+            userForUpdate.Type = type,  
+            userForUpdate.Login = login,  
+            userForUpdate.Password = password,
+            userForUpdate.Key = key
+            
+            await DataBaseOperationsUser.updateUser(userForUpdate);      
+            return res.status(201).json({});
+        }
 
-        userForUpdate.Name = name;
-        userForUpdate.Phone = phone;
-        userForUpdate.Type = type,  
-        userForUpdate.Login = login,  
-        userForUpdate.Password = password,
-        userForUpdate.Key = key
-
-        const updated = await DataBaseOperationsUser.updateUser(userForUpdate);
-        return res.json(userForUpdate);
+        return res.status(401).json({message: 'id not found'});
+        
 
 
     }
