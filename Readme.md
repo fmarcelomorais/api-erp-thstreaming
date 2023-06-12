@@ -17,12 +17,12 @@
       - id
 
    * [GET] /user/users
-      -
+      - -
 
    * [POST] /user/register
       - name
       - phone
-      - type
+      - type [1] Master [2] Pro [3] Tester
       - login
       - password
    * [PATCH] /user/update
