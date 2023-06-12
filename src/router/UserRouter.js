@@ -4,7 +4,7 @@ const UserController = require('../controller/UserController');
 
 userRouter.get('/user', Middle.verifyAuthentication, UserController.getUser)
 userRouter.get('/users', Middle.verifyAuthentication, Middle.verifyAuthentication, UserController.getAllUser)
-userRouter.post('/register', Middle.verifyFieldsUserIsEmpty, UserController.registerUser);
+userRouter.post('/register', Middle.verifyAuthentication, Middle.verifyFieldsUserIsEmpty, UserController.registerUser);
 userRouter.patch('/update', Middle.verifyAuthentication, UserController.updateUser);
 userRouter.delete('/delete', Middle.verifyAuthentication, UserController.deleteUser);
 userRouter.post('/login', UserController.loginUser);

@@ -21,14 +21,17 @@ class Middle{
         if(!authorization){
             return res.status(401).json();    
         }        
-        const decoded = jwt.verify(authorization, process.env.SECRET_KEY);
-        console.log(decoded);   
+        const decoded = jwt.verify(authorization, process.env.SECRET_KEY); 
 
         if (!decoded) {
             return res.status(401);
         } 
-
+        
         return next();
+    }
+    
+    static verifyTypeUser(){
+        
     }
 
 }
