@@ -45,6 +45,12 @@ class DatabaseOperationsUser {
         const deleted = await db.exec(`DELETE FROM tbl_User WHERE Id = ${Id}`);
         return deleted;
     }
+
+    static async loginUser(login, password, key) {
+        const db = await DatabaseOperation.openDbConnection();
+        const user = await db.get(`SELECT * FROM tbl_User WHERE Login = '${login}' AND Password = '${password}' AND Key = '${key}';`);
+        return user;
+    }
 }
 
 module.exports = DatabaseOperationsUser;

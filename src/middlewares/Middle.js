@@ -1,3 +1,6 @@
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
+
 class Middle{
 
     static verifyFieldsUserIsEmpty(req, res, next){
@@ -10,6 +13,22 @@ class Middle{
         const userDates = { name: name, phone: phone, type: type, login: login, password: password}
         req.userDates = userDates;
         return  next();
+    }
+
+    static verifyAuthentication(req, res, next) {
+        const  { authorization }  = req.headers;
+
+        if(!authorization){
+            return res.status(401).json();    
+        }        
+        const decoded = jwt.verify(authorization, process.env.SECRET_KEY);
+        console.log(decoded);   
+
+        if (!decoded) {
+            return res.status(401);
+        } 
+
+        return next();
     }
 
 }

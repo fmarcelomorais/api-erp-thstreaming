@@ -1,4 +1,36 @@
 ## ERP - TH-STREAMING
+
+-- SISTEMA DE CADASTRO DE CLIENTES -- 
+   ## ROTAS DA APLICAÇÃO
+
+   - Usuários do Sistema
+
+   ** [HEADER]
+      - Authorization -> token liberado pela resposta da requisição no login de usuário.
+   
+   *[POST] /user/login 
+      - login
+      - password
+      - key
+
+   *[GET] /user/user
+      - id
+
+   *[GET] /user/users
+      -
+
+   *[POST] /user/register
+      - name
+      - phone
+      - type
+      - login
+      - password
+   [PATCH] /user/update
+      - id
+
+   [DELETE] /user/delete
+      - id
+   
 --
 ### Funcionalidade
 

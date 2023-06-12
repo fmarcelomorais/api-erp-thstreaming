@@ -1,3 +1,5 @@
+const jwt = require('jsonwebtoken');
+require('dotenv').config();
 const DataBaseOperationsUser = require('../database/DataBaseOperationsUser');
 const UserModel = require('../model/UserModel.js');
 
@@ -32,6 +34,7 @@ class UserController{
         const {id, name, phone, type, login, password, key} = req.body;
 
         const userForUpdate = await DataBaseOperationsUser.getUser(id);
+
         if(userForUpdate){
             userForUpdate.Name = name;
             userForUpdate.Phone = phone;
@@ -48,10 +51,23 @@ class UserController{
     }
 
     static async deleteUser(req, res){
-        const {id} = req.body;
+        const { id } = req.body;
         const deleted = await DataBaseOperationsUser.deleteUser(id);
         
         res.status(201).json({success: 'deleted'});
+    }
+
+    static async loginUser(req, res){
+
+        const { login, password, key } = req.body;
+        const userLogin = await DataBaseOperationsUser.loginUser(login, password, key);
+        const token = jwt.sign({
+            id: userLogin.Id,
+            type: userLogin.Type
+        }, process.env.SECRET_KEY, { expiresIn: '1h' });
+        
+        return res.json({'token': token});
+        
     }
 }
 

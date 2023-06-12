@@ -2,11 +2,12 @@ const userRouter = require('express').Router();
 const Middle = require('../middlewares/Middle');
 const UserController = require('../controller/UserController');
 
-userRouter.get('/user', UserController.getUser)
-userRouter.get('/users', UserController.getAllUser)
+userRouter.get('/user', Middle.verifyAuthentication, UserController.getUser)
+userRouter.get('/users', Middle.verifyAuthentication, Middle.verifyAuthentication, UserController.getAllUser)
 userRouter.post('/register', Middle.verifyFieldsUserIsEmpty, UserController.registerUser);
-userRouter.patch('/update', UserController.updateUser);
-userRouter.delete('/delete', UserController.deleteUser);
+userRouter.patch('/update', Middle.verifyAuthentication, UserController.updateUser);
+userRouter.delete('/delete', Middle.verifyAuthentication, UserController.deleteUser);
+userRouter.post('/login', UserController.loginUser);
 
 
 module.exports = userRouter;

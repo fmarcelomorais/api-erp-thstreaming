@@ -23,7 +23,7 @@ app.use(
         origin: '*',
         methods: ['GET', 'POST', 'PUT', 'DELETE'],
         allowedHeaders: ['Content-Type', 'Authorization', 'access-control-allow-origin'],
-        credentials: false,
+        credentials: true,
         optionsSuccessStatus: 200,
         maxAge: 86400
     })
