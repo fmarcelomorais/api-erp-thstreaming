@@ -5,30 +5,30 @@
 
    - Usuários do Sistema
 
-   ** [HEADER]
+   * [HEADER]
       - Authorization -> token liberado pela resposta da requisição no login de usuário.
    
-   *[POST] /user/login 
+   * [POST] /user/login 
       - login
       - password
       - key
 
-   *[GET] /user/user
+   * [GET] /user/user
       - id
 
-   *[GET] /user/users
+   * [GET] /user/users
       -
 
-   *[POST] /user/register
+   * [POST] /user/register
       - name
       - phone
       - type
       - login
       - password
-   [PATCH] /user/update
+   * [PATCH] /user/update
       - id
 
-   [DELETE] /user/delete
+   * [DELETE] /user/delete
       - id
    
 --
