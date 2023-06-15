@@ -15,6 +15,18 @@ class Middle{
         return  next();
     }
 
+    static verifyFieldsClientIsEmpty(req, res, next){
+        const {name, phone, observation } = req.body;
+        
+        if(!name || !phone || !observation ) {
+
+            return res.status(400).json({message:'All data needs to be filled in.'});
+        }
+        const clientDates = { name: name, phone: phone, observation: observation}
+        req.clientDates = clientDates;
+        return  next();
+    }
+
     static verifyAuthentication(req, res, next) {
         const  { authorization }  = req.headers;
 

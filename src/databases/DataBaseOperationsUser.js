@@ -1,4 +1,4 @@
-const DatabaseOperation = require('../database/DatabaseOperations');
+const DatabaseOperation = require('./DatabaseOperations');
 
 class DatabaseOperationsUser {
 

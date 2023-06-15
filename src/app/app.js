@@ -1,5 +1,5 @@
 const express = require('express');
-const DatabaseOperation = require('../database/DatabaseOperations.js');
+const DatabaseOperation = require('../databases/DatabaseOperations');
 const cors = require('cors');
 const app = express();
 
@@ -14,6 +14,7 @@ DatabaseOperation.createTablePlan();
 //DatabaseOperation.alterTable();
 
 const userRouter = require('../router/UserRouter.js');
+const clientRouter = require('../router/ClientRouter.js');
 
 //Middlewares
 app.use(express.urlencoded({extended: true}));
@@ -31,5 +32,6 @@ app.use(
 
 //Rotas
 app.use('/user', userRouter);
+app.use('/client', clientRouter);
 
 module.exports = app;

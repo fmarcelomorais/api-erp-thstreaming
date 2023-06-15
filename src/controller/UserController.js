@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
-const DataBaseOperationsUser = require('../database/DataBaseOperationsUser');
+const DataBaseOperationsUser = require('../databases/DataBaseOperationsUser');
 const UserModel = require('../model/UserModel.js');
 
 class UserController{
