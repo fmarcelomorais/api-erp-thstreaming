@@ -2,6 +2,7 @@ const  sqlite3 = require("sqlite3");
 const { open } = require("sqlite");
 
 class DatabaseOperation {
+    
     static async openDbConnection(){
         return await open({
             filename: "./databasethstv.db",
@@ -42,7 +43,8 @@ class DatabaseOperation {
             Login VARCHAR(255) NOT NULL, \
             Password VARCHAR(255) NOT NULL, \
             Url VARCHAR(255) NOT NULL, \
-            Credits INTEGER NOT NULL \
+            Credits INTEGER NOT NULL, \
+            Observation VARCHAR(255) \
             )" 
         );
     }

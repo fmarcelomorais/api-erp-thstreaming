@@ -1,20 +1,12 @@
 const express = require('express');
-const DatabaseOperation = require('../databases/DatabaseOperations');
+require('../databases/databaseMethods');
 const cors = require('cors');
 const app = express();
 
-// Operações com banco de dados - Criação das tabelas
-DatabaseOperation.openDbConnection();
-DatabaseOperation.createTableUser();
-DatabaseOperation.createTableClients();
-DatabaseOperation.createTablePanel();
-DatabaseOperation.createTableReseller();
-DatabaseOperation.createTableAccount();
-DatabaseOperation.createTablePlan();
-//DatabaseOperation.alterTable();
-
 const userRouter = require('../router/UserRouter.js');
 const clientRouter = require('../router/ClientRouter.js');
+const panelRouter = require('../router/PanelRouter.js');
+const planRouter = require('../router/PlanRouter.js');
 
 //Middlewares
 app.use(express.urlencoded({extended: true}));
@@ -33,5 +25,7 @@ app.use(
 //Rotas
 app.use('/user', userRouter);
 app.use('/client', clientRouter);
+app.use('/panel', panelRouter);
+app.use('/plan', planRouter);
 
 module.exports = app;

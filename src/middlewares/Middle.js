@@ -19,12 +19,33 @@ class Middle{
         const {name, phone, observation } = req.body;
         
         if(!name || !phone || !observation ) {
-
             return res.status(400).json({message:'All data needs to be filled in.'});
         }
         const clientDates = { name: name, phone: phone, observation: observation}
         req.clientDates = clientDates;
         return  next();
+    }
+
+    static verifyFieldsPanelIsEmpty(req, res, next) {
+        const { name, login, password,  url, credits, observation} = req.body;
+
+        if( !name || !login || !password || !url || !credits){
+            return res.status(400).json({message:'All data needs to be filled in.'});  
+        }
+        const PanelDates = {name: name, login: login, password: password,  url: url, credits: credits, observation: observation};
+        req.PanelDates = PanelDates
+        return next();
+    }
+
+    static verifyFieldsPlanIsEmpty(req, res, next) {
+        const { name, amount } = req.body;
+
+        if( !name || !amount ){
+            return res.status(400).json({message:'All data needs to be filled in.'});  
+        }
+        const planDates = {name: name, amount: amount };
+        req.planDates = planDates
+        return next();
     }
 
     static verifyAuthentication(req, res, next) {
@@ -42,8 +63,17 @@ class Middle{
         return next();
     }
     
-    static verifyTypeUser(){
+    static verifyFieldLogin(req, res, next) {
+        const { login, password, type, key} = req.body;
         
+        if( !type || !login || !password || !key) {
+
+            return res.status(400).json({message:'All data needs to be filled in.'});
+        }
+        const userLogin = {  login: login, password: password, type: type, key: key}
+        req.userLogin = userLogin;
+
+        return  next();    
     }
 
 }

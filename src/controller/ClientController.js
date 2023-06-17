@@ -1,5 +1,4 @@
-
-const DatabaseOperationsClient = require('../databases/DataBaseOperationsClient');
+const DatabaseOperationsClient = require('../databases/sqlite/DataBaseOperationsClient');
 const ClientModel = require('../model/ClientModel.js');
 
 class ClientController{
