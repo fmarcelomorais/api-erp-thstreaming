@@ -15,8 +15,8 @@ class ClientController{
     }
 
     static async registerClient(req, res){
-        const {clientDates} = req;
-        const newClient = new ClientModel(clientDates.name, clientDates.phone, clientDates.observation);
+        const {clientDatas} = req;
+        const newClient = new ClientModel(clientDatas.name, clientDatas.phone, clientDatas.observation);
         try {
             const registred = DatabaseOperationsClient.createClient(newClient);
          

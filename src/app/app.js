@@ -7,6 +7,8 @@ const userRouter = require('../router/UserRouter.js');
 const clientRouter = require('../router/ClientRouter.js');
 const panelRouter = require('../router/PanelRouter.js');
 const planRouter = require('../router/PlanRouter.js');
+const accountRouter = require('../router/AccountRouter.js');
+const resellerRouter = require('../router/ResellerRouter.js');
 
 //Middlewares
 app.use(express.urlencoded({extended: true}));
@@ -27,5 +29,7 @@ app.use('/user', userRouter);
 app.use('/client', clientRouter);
 app.use('/panel', panelRouter);
 app.use('/plan', planRouter);
+app.use('/account', accountRouter);
+app.use('/reseller', resellerRouter);
 
 module.exports = app;

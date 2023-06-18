@@ -1,16 +1,16 @@
 
-export default class ResellerModel{
-        
-    constructor(idClient , idPanel, idPlan, login, password, statusPayment, statusAccount, dateMembership, dateRenovation, dateExpiration){
-        this.IdClient = idClient;
-        this.IdPanel = idPanel;
-        this.IdPlan = idPlan;
-        this.Login = login;
-        this.Password = password;
-        this.StatusPayment = statusPayment;
-        this.StatusAccount = statusAccount;
-        this.DateMembership = dateMembership;
-        this.DateRenovation = dateRenovation;
-        this.DateExpiration = dateExpiration;
+class ResellerModel{
+       Id = null; 
+    constructor(name , phone, email, observation, credits, datePaymentCredits, dateRegister, idPanel){
+        this.Name = name;
+        this.Phone = phone;
+        this.Email = email;
+        this.Observation = observation;
+        this.Credits = credits;
+        this.DatePaymentCredits = datePaymentCredits;
+        this.DateRegister = dateRegister;
+        this.IdPanel = idPanel
     }
 }
+
+module.exports = ResellerModel;

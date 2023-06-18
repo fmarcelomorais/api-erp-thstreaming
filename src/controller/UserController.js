@@ -17,8 +17,8 @@ class UserController{
     }
 
     static async registerUser(req, res){
-        const {userDates} = req;
-        const newUser = new UserModel(userDates.name, userDates.phone, userDates.type, userDates.login, userDates.password);
+        const {userDatas} = req;
+        const newUser = new UserModel(userDatas.name, userDatas.phone, userDatas.type, userDatas.login, userDatas.password);
         try {
             const registred = DataBaseOperationsUser.createUser(newUser);
          

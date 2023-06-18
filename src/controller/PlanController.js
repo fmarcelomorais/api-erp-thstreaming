@@ -15,8 +15,8 @@ class PlanController{
     }
 
     static async registerPlan(req, res){
-        const { planDates } = req;
-        const newPlan = new PlanModel(planDates.name, planDates.amount);
+        const { planDatas } = req;
+        const newPlan = new PlanModel(planDatas.name, planDatas.amount);
         try {
             const registred = DataBaseOperationsPlan.createPlan(newPlan);
          

@@ -10,8 +10,8 @@ class Middle{
 
             return res.status(400).json({message:'All data needs to be filled in.'});
         }
-        const userDates = { name: name, phone: phone, type: type, login: login, password: password}
-        req.userDates = userDates;
+        const userDatas = { name: name, phone: phone, type: type, login: login, password: password}
+        req.userDatas = userDatas;
         return  next();
     }
 
@@ -21,8 +21,8 @@ class Middle{
         if(!name || !phone || !observation ) {
             return res.status(400).json({message:'All data needs to be filled in.'});
         }
-        const clientDates = { name: name, phone: phone, observation: observation}
-        req.clientDates = clientDates;
+        const clientDatas = { name: name, phone: phone, observation: observation}
+        req.clientDatas = clientDatas;
         return  next();
     }
 
@@ -32,8 +32,8 @@ class Middle{
         if( !name || !login || !password || !url || !credits){
             return res.status(400).json({message:'All data needs to be filled in.'});  
         }
-        const PanelDates = {name: name, login: login, password: password,  url: url, credits: credits, observation: observation};
-        req.PanelDates = PanelDates
+        const panelDatas = {name: name, login: login, password: password,  url: url, credits: credits, observation: observation};
+        req.panelDatas = panelDatas
         return next();
     }
 
@@ -43,8 +43,53 @@ class Middle{
         if( !name || !amount ){
             return res.status(400).json({message:'All data needs to be filled in.'});  
         }
-        const planDates = {name: name, amount: amount };
-        req.planDates = planDates
+        const planDatas = {name: name, amount: amount };
+        req.planDatas = planDatas
+        return next();
+    }
+
+    static verifyFieldsAccountIsEmpty(req, res, next) {
+
+        const { idClient , idPanel, idPlan, idReseller, login, password, statusPayment, 
+            statusAccount, dateMembership, dateRenovation, dateExpiration } = req.body
+
+        if( !idClient || !idPanel || !idPlan || !idReseller || !login || !password || !statusPayment || !statusAccount || !dateMembership || !dateRenovation || !dateExpiration ){
+            return res.status(400).json({message:'All data needs to be filled in.'});  
+        }
+        const accountDatas = { 
+            idClient: idClient, 
+            idPanel: idPanel, 
+            idPlan: idPlan,  
+            idReseller: idReseller,  
+            login: login, 
+            password: password, 
+            statusPayment: statusPayment, 
+            statusAccount: statusAccount, 
+            dateMembership: dateMembership, 
+            dateRenovation: dateRenovation, 
+            dateExpiration: dateExpiration 
+        };
+        req.accountDatas = accountDatas
+        return next();
+    }
+       
+    static async verifyFieldsResellerIsEmpty(req, res, next) {
+        const { name , phone, email, observation, credits, datePaymentCredits, dateRegister, idPanel } = req.body;
+        if( !name || !phone || !email || !credits || !datePaymentCredits || !dateRegister || !idPanel){
+            return res.status(400).json({message:'All data needs to be filled in.'});      
+        }
+        const resellerDatas = {
+            name: name, 
+            phone: phone, 
+            email: email, 
+            observation: observation, 
+            credits: credits, 
+            datePaymentCredits: datePaymentCredits, 
+            dateRegister: dateRegister, 
+            idPanel: idPanel,  
+        }
+        
+        req.resellerDatas = resellerDatas
         return next();
     }
 
