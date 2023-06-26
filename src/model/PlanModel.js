@@ -1,6 +1,7 @@
+const {v4: uuidv4} = require('uuid');
 
 class PlanModel{
-    Id = null;  
+    Id = uuidv4();  
     constructor(name, amount, period){
         this.Name = name;
         this.Amount = amount;

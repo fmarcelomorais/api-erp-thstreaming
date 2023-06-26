@@ -1,6 +1,6 @@
-
+const {v4: uuidv4} = require('uuid');
 class PanelModel{
-        Id = null;  
+        Id = uuidv4();  
     constructor(name, login, password,  url, credits, observation){
         this.Name = name;
         this.Login = login;

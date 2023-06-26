@@ -1,6 +1,6 @@
-
+const {v4: uuidv4} = require('uuid');
 class AccountModel{
-       Id = null; 
+       Id = uuidv4(); 
     constructor(idClient , idPanel, idPlan, idReseller, login, password, statusPayment, statusAccount, dateMembership, dateRenovation, dateExpiration){
         this.IdClient = idClient;
         this.IdPanel = idPanel;

@@ -1,17 +1,20 @@
+const DataBaseOperationsPgPanel = require('../databases/db_pg/DataBaseOperationsPgPanel');
 const DataBaseOperationsPanel = require('../databases/sqlite/DataBaseOperationsPanel');
 const PanelModel = require('../model/PanelModel.js');
 
 class PanelController{
 
     static async getAllPanels(req, res){
+        const panelsPg = await DataBaseOperationsPgPanel.getAllPanels();
         const panels = await DataBaseOperationsPanel.getAllPanels();
-        res.json({panels: panels});
+        res.json({panels: panelsPg});
     }
 
     static async getPanel(req, res){
         const { id } = req.body
+        const panelPg = await DataBaseOperationsPgPanel.getPanel(id);
         const panel = await DataBaseOperationsPanel.getPanel(id);
-        res.json({panel: panel});
+        res.json({panel: panelPg});
     }
 
     static async registerPanel(req, res){
@@ -20,9 +23,10 @@ class PanelController{
         const newPanel = new PanelModel(panelDatas.name, panelDatas.login, panelDatas.password, panelDatas.url, panelDatas.credits, panelDatas.observation);
         console.log(newPanel);
         try {
+            const registredPg = DataBaseOperationsPgPanel.createPanel(newPanel);
             const registred = DataBaseOperationsPanel.createPanel(newPanel);
          
-            if(registred)
+            if(registredPg)
                 return res.status(201).json({message: 'Created'});   
             return res.status(400).json({message: 'Not Registered'});          
         } catch (error) {
@@ -33,17 +37,19 @@ class PanelController{
     static async updatePanel(req, res){
         const {name, login, password,  url, credits, observation} = req.body;
 
+        const panelForUpdatePg = await DataBaseOperationsPgPanel.getPanel(id);
         const panelForUpdate = await DataBaseOperationsPanel.getPanel(id);
 
-        if(panelForUpdate){
-            panelForUpdate.Name = name;
-            panelForUpdate.Login = login;  
-            panelForUpdate.Password = password;
-            panelForUpdate.Url = url;
-            panelForUpdate.Credits = credits;  
-            panelForUpdate.Observation = observation;
+        if(panelForUpdatePg){
+            panelForUpdatePg.Name = name;
+            panelForUpdatePg.Login = login;  
+            panelForUpdatePg.Password = password;
+            panelForUpdatePg.Url = url;
+            panelForUpdatePg.Credits = credits;  
+            panelForUpdatePg.Observation = observation;
             
-            await DataBaseOperationsPanel.updateUser(panelForUpdate);      
+            await DataBaseOperationsPgPanel.updateUser(panelForUpdatePg);      
+            await DataBaseOperationsPanel.updateUser(panelForUpdatePg);      
             return res.status(201).json({});
         }
 
@@ -52,7 +58,8 @@ class PanelController{
 
     static async deletePanel(req, res){
         const { id } = req.body;
-        const deleted = await DataBaseOperationsPanel.deletePanel(id);
+        await DataBaseOperationsPgPanel.deletePanel(id);
+        await DataBaseOperationsPanel.deletePanel(id);
         
         res.status(201).json({success: 'deleted'});
     }

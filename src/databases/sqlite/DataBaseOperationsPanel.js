@@ -4,20 +4,20 @@ class DatabaseOperationsClient {
 
     static async getAllPanels(){
         const db = await DatabaseOperation.openDbConnection();
-        const panels = await db.all("SELECT * FROM tbl_Panel");
+        const panels = await db.all("SELECT * FROM tbl_Panels");
         return panels;
     }
 
     static async getPanel(id){
         const db = await DatabaseOperation.openDbConnection();
-        const panel = await db.get(`SELECT * FROM tbl_Panel WHERE Id = ${id};`);
+        const panel = await db.get(`SELECT * FROM tbl_Panels WHERE Id = "${id}";`);
         return panel;
     }
 
     static async createPanel(panel){
         const db = await DatabaseOperation.openDbConnection();
-        const query =`INSERT INTO tbl_Panel (Id, Name, Login, Password, Url, Credits, Observation ) 
-            VALUES ( ${panel.Id}, "${panel.Name}", "${panel.Login}", "${panel.Password}", "${panel.Url}", ${panel.Credits}, "${panel.Observation}" );`;
+        const query =`INSERT INTO tbl_Panels (Id, Name, Login, Password, Url, Credits, Observation ) 
+            VALUES ( "${panel.Id}", "${panel.Name}", "${panel.Login}", "${panel.Password}", "${panel.Url}", ${panel.Credits}, "${panel.Observation}" );`;
         const insert = await db.exec(query);
         return insert;
 
@@ -26,8 +26,8 @@ class DatabaseOperationsClient {
     static async updateClient(panel) {
         const db = await DatabaseOperation.openDbConnection();
 
-        const sql = `UPDATE tbl_Panel SET 
-            Id = ${panel.Id}, 
+        const sql = `UPDATE tbl_Panels SET 
+            Id = "${panel.Id}", 
             Name = "${panel.Name}", 
             Phone = "${panel.Login}", 
             Observation = "${panel.Password}", 
@@ -42,7 +42,7 @@ class DatabaseOperationsClient {
 
     static async deleteClient(Id) {
         const db = await DatabaseOperation.openDbConnection();
-        const deleted = await db.exec(`DELETE FROM tbl_Panel WHERE Id = ${Id}`);
+        const deleted = await db.exec(`DELETE FROM tbl_Panels WHERE Id = "${Id}"`);
         return deleted;
     }
 

@@ -1,17 +1,20 @@
+const DatabaseOperationsPgReseller = require('../databases/db_pg/DataBaseOperationsPgReseller');
 const DatabaseOperationsReseller = require('../databases/sqlite/DataBaseOperationsReseller');
 const ResellerModel = require('../model/ResellerModel');
 
 class ResellerController{
 
     static async getAllResellers(req, res){
+        const resellersPg = await DatabaseOperationsPgReseller.getAllResellers();
         const resellers = await DatabaseOperationsReseller.getAllResellers();
-        res.json({resellers: resellers});
+        res.json({resellers: resellersPg});
     }
 
     static async getReseller(req, res){
         const { id } = req.body
+        const resellerPg = await DatabaseOperationsPgReseller.getReseller(id);
         const reseller = await DatabaseOperationsReseller.getReseller(id);
-        res.json({reseller: reseller});
+        res.json({reseller: resellerPg});
     }
 
     static async registerReseller(req, res){
@@ -27,11 +30,12 @@ class ResellerController{
             resellerDatas.dateRegister,
             resellerDatas.idPanel,
         );
-        console.log(newReseller)
+        
         try {
+            const registredPg = DatabaseOperationsPgReseller.createReseller(newReseller);
             const registred = DatabaseOperationsReseller.createReseller(newReseller);
          
-            if(registred)
+            if(registredPg)
                 return res.status(201).json({message: 'Created'});   
             return res.status(400).json({message: 'Not Registered'});          
         } catch (error) {
@@ -40,27 +44,24 @@ class ResellerController{
     }
 
     static async updateReseller(req, res){
-        const { 
-                id, idClient , idPanel, idPlan, login, password, statusPayment, 
-                statusAccount, dateMembership, dateRenovation, dateExpiration 
-            } = req.body;
+        const { id, name , phone, email, observation, credits, datepaymentcredits, dateregister, fk_panel } = req.body;
 
+        const resellerForUpdatePg = await DatabaseOperationsPgReseller.getReseller(id);
         const resellerForUpdate = await DatabaseOperationsReseller.getReseller(id);
 
-        if(resellerForUpdate){
-            resellerForUpdate.Id = id; 
-            resellerForUpdate.IdClient = idClient;
-            resellerForUpdate.IdPanel = idPanel;
-            resellerForUpdate.IdPanel = idPlan; 
-            resellerForUpdate.Login = login; 
-            resellerForUpdate.Password = password;
-            resellerForUpdate.StatusPayment = statusPayment; 
-            resellerForUpdate.StatusAccount = statusAccount; 
-            resellerForUpdate.DateMembership = dateMembership; 
-            resellerForUpdate.DateRenovation = dateRenovation; 
-            resellerForUpdate.DateExpiration = dateExpiration;
+        if(resellerForUpdatePg){
+            resellerForUpdatePg.Id = id; 
+            resellerForUpdatePg.Name = name;
+            resellerForUpdatePg.Phone = phone;
+            resellerForUpdatePg.Email = email;
+            resellerForUpdatePg.Observation = observation;
+            resellerForUpdatePg.Credits = credits;
+            resellerForUpdatePg.DatePaymentCredits = datepaymentcredits;
+            resellerForUpdatePg.DateRegister = dateregister;
+            resellerForUpdatePg.IdPanel = fk_panel;
             
-            await DatabaseOperationsReseller.updateReseller(resellerForUpdate);      
+            await DatabaseOperationsPgReseller.updateReseller(resellerForUpdatePg);      
+            await DatabaseOperationsReseller.updateReseller(resellerForUpdatePg);      
             return res.status(201).json({});
         }
 
@@ -69,7 +70,8 @@ class ResellerController{
 
     static async deleteReseller(req, res){
         const { id } = req.body;
-        const deleted = await DatabaseOperationsReseller.deleteReseller(id);
+        await DatabaseOperationsPgReseller.deleteReseller(id);
+        await DatabaseOperationsReseller.deleteReseller(id);
         
         res.status(201).json({success: 'deleted'});
     }

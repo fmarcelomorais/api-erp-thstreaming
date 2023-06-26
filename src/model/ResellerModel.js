@@ -1,6 +1,6 @@
-
+const {v4: uuidv4} = require('uuid');
 class ResellerModel{
-       Id = null; 
+       Id = uuidv4(); 
     constructor(name , phone, email, observation, credits, datePaymentCredits, dateRegister, idPanel){
         this.Name = name;
         this.Phone = phone;

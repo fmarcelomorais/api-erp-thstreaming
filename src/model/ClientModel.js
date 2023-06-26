@@ -1,6 +1,7 @@
+const {v4: uuidv4} = require('uuid');
 
 class ClientModel{
-        Id = null;
+        Id = uuidv4();
     constructor(name, phone, observation){
         this.Name = name;
         this.Phone = phone;

@@ -5,7 +5,7 @@ class Middle{
 
     static verifyFieldsUserIsEmpty(req, res, next){
         const {name, phone, type, login, password} = req.body;
-        
+        console.log(name, phone, type, login, password)
         if(!name || !phone || !type || !login || !password) {
 
             return res.status(400).json({message:'All data needs to be filled in.'});

@@ -17,7 +17,7 @@ class DatabaseOperationsClient {
     static async createClient(client){
         const db = await DatabaseOperation.openDbConnection();
         const query =`INSERT INTO tbl_Clients (Id, Name, Phone, Observation ) 
-            VALUES ( ${client.Id}, "${client.Name}", "${client.Phone}", "${client.Observation}");`;
+            VALUES ( "${client.Id}", "${client.Name}", "${client.Phone}", "${client.Observation}");`;
         const insert = await db.exec(query);
         return insert;
 

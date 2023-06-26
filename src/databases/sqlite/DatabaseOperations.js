@@ -12,8 +12,8 @@ class DatabaseOperation {
 
     static async createTableUser(){
         const db = await this.openDbConnection();
-        await db.exec("CREATE TABLE IF NOT EXISTS tbl_User (\
-                Id INTEGER PRIMARY KEY AUTOINCREMENT, \
+        await db.exec("CREATE TABLE IF NOT EXISTS tbl_users (\
+                Id VARCHAR(255) NOT NULL, \
                 Name VARCHAR(255) NOT NULL, \
                 Phone VARCHAR(30) NOT NULL, \
                 Type INTEGER NOT NULL, \
@@ -26,8 +26,8 @@ class DatabaseOperation {
 
     static async createTableClients(){
         const db = await this.openDbConnection();   
-        await db.exec("CREATE TABLE IF NOT EXISTS tbl_Clients (\
-            Id INTEGER PRIMARY KEY AUTOINCREMENT, \
+        await db.exec("CREATE TABLE IF NOT EXISTS tbl_clients (\
+            Id VARCHAR(255) NOT NULL, \
             Name VARCHAR(255) NOT NULL, \
             Phone VARCHAR(255) NOT NULL, \
             Observation VARCHAR(255) \
@@ -37,8 +37,8 @@ class DatabaseOperation {
 
     static async createTablePanel(){
         const db = await this.openDbConnection();
-        await db.exec("CREATE TABLE IF NOT EXISTS tbl_Panel (\
-            Id INTEGER PRIMARY KEY AUTOINCREMENT, \
+        await db.exec("CREATE TABLE IF NOT EXISTS tbl_Panels (\
+            Id VARCHAR(255) NOT NULL, \
             Name VARCHAR(255) NOT NULL, \
             Login VARCHAR(255) NOT NULL, \
             Password VARCHAR(255) NOT NULL, \
@@ -51,43 +51,43 @@ class DatabaseOperation {
 
     static async createTableReseller(){
         const db = await this.openDbConnection();
-        await db.exec("CREATE TABLE IF NOT EXISTS tbl_Reseller (\
-            Id INTEGER PRIMARY KEY AUTOINCREMENT, \
+        await db.exec("CREATE TABLE IF NOT EXISTS tbl_Resellers (\
+            Id VARCHAR(255) NOT NULL, \
             Name VARCHAR(255) NOT NULL, \
             Phone VARCHAR(30) NOT NULL, \
             Email VARCHAR(255) NOT NULL, \
             Observation VARCHAR(255), \
             Credits INTEGER NOT NULL, \
-            DatePaymentCredits DATETIME NOT NULL, \
-            DateRegister DATETIME NOT NULL,\
-            FK_Panel INTEGER NOT NULL \
+            DatePaymentCredits DATE NOT NULL, \
+            DateRegister DATE NOT NULL,\
+            FK_Panel VARCHAR(255) NOT NULL \
             )" 
         );
     }
 
     static async createTableAccount(){
         const db = await this.openDbConnection();
-        await db.exec("CREATE TABLE IF NOT EXISTS tbl_Account (\
-            Id INTEGER PRIMARY KEY AUTOINCREMENT, \
-            FK_Client INTEGER NOT NULL, \
-            FK_Panel INTEGER NOT NULL, \
-            FK_Reseller INTEGER NOT NULL, \
+        await db.exec("CREATE TABLE IF NOT EXISTS tbl_Accounts (\
+            Id VARCHAR(255) NOT NULL, \
+            FK_Client VARCHAR(255) NOT NULL, \
+            FK_Panel VARCHAR(255) NOT NULL, \
+            FK_Reseller VARCHAR(255) NOT NULL, \
             Login VARCHAR(255) NOT NULL, \
             Password VARCHAR(255) NOT NULL, \
             StatusPayment VARCHAR(25), \
             StatusAccount VARCHAR(25), \
-            DateMembership DATETIME NOT NULL, \
-            DateRenovation DATETIME NOT NULL, \
-            DateExpiration DATETIME NOT NULL, \
-            FK_Plan INTEGER NOT NULL \
+            DateMembership DATE NOT NULL, \
+            DateRenovation DATE NOT NULL, \
+            DateExpiration DATE NOT NULL, \
+            FK_Plan VARCHAR(255) NOT NULL \
             )" 
         );
     }
 
     static async createTablePlan(){
         const db = await this.openDbConnection();
-        await db.exec("CREATE TABLE IF NOT EXISTS tbl_Plan (\
-            Id INTEGER PRIMARY KEY AUTOINCREMENT, \
+        await db.exec("CREATE TABLE IF NOT EXISTS tbl_Plans (\
+            Id VARCHAR(255) NOT NULL, \
             Name VARCHAR(255) NOT NULL, \
             amount DECIMAL NOT NULL \
             )"

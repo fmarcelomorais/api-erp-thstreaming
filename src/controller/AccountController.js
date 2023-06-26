@@ -1,26 +1,31 @@
 const DatabaseOperationsAccount = require('../databases/sqlite/DataBaseOperationsAccount');
+const DatabaseOperationsPgAccount = require('../databases/db_pg/DataBaseOperationsPgAccount');
 const AccountModel = require('../model/AccountModel');
 
 class AccountController{
 
     static async getAllAccounts(req, res){
+        const acountsPg = await DatabaseOperationsPgAccount.getAllAccounts();
         const acounts = await DatabaseOperationsAccount.getAllAccounts();
-        res.json({acounts: acounts});
+        res.json({acounts: acountsPg});
     }
 
     static async getAccount(req, res){
         const { id } = req.body
+        const accountPg = await DatabaseOperationsPgAccount.getAccount(id);
         const account = await DatabaseOperationsAccount.getAccount(id);
-        res.json({account: account});
+        res.json({account: accountPg});
     }
 
     static async registerAccount(req, res){
         const { accountDatas } = req;
 
-        const exist = await DatabaseOperationsAccount.getAccountIfExists(accountDatas.login);
-        if(exist) {
+        const existPg = await DatabaseOperationsPgAccount.getAccountIfExists(accountDatas.login, accountDatas.password);
+        const exist = await DatabaseOperationsAccount.getAccountIfExists(accountDatas.login, accountDatas.password);
+        console.log(exist, existPg)
+     /*    if(existPg && existPg) {
             return res.json({ message: `${accountDatas.login} Registered.` });
-        }
+        } */
         const newAccount = new AccountModel(
             accountDatas.idClient,
             accountDatas.idPanel,
@@ -35,8 +40,9 @@ class AccountController{
             accountDatas.dateExpiration,
         );
         try {
+            const registredPg = DatabaseOperationsPgAccount.createAccount(newAccount);            
             const registred = DatabaseOperationsAccount.createAccount(newAccount);            
-            if(registred)
+            if(registredPg)
                 return res.status(201).json({message: 'Created'});   
             return res.status(400).json({message: 'Not Registered'});          
         } catch (error) {
@@ -50,21 +56,23 @@ class AccountController{
                 statusAccount, dateMembership, dateRenovation, dateExpiration 
             } = req.body;
 
+        const accountForUpdatePg = await DatabaseOperationsPgAccount.getAccount(id);
         const accountForUpdate = await DatabaseOperationsAccount.getAccount(id);
 
-        if(accountForUpdate){
-            accountForUpdate.Id = id; 
-            accountForUpdate.IdClient = idClient;
-            accountForUpdate.IdPanel = idPanel;
-            accountForUpdate.IdPanel = idPlan; 
-            accountForUpdate.Login = login; 
-            accountForUpdate.Password = password;
-            accountForUpdate.StatusPayment = statusPayment; 
-            accountForUpdate.StatusAccount = statusAccount; 
-            accountForUpdate.DateMembership = dateMembership; 
-            accountForUpdate.DateRenovation = dateRenovation; 
-            accountForUpdate.DateExpiration = dateExpiration;
+        if(accountForUpdatePg){
+            accountForUpdatePg.Id = id; 
+            accountForUpdatePg.IdClient = idClient;
+            accountForUpdatePg.IdPanel = idPanel;
+            accountForUpdatePg.IdPanel = idPlan; 
+            accountForUpdatePg.Login = login; 
+            accountForUpdatePg.Password = password;
+            accountForUpdatePg.StatusPayment = statusPayment; 
+            accountForUpdatePg.StatusAccount = statusAccount; 
+            accountForUpdatePg.DateMembership = dateMembership; 
+            accountForUpdatePg.DateRenovation = dateRenovation; 
+            accountForUpdatePg.DateExpiration = dateExpiration;
             
+            await DatabaseOperationsPgAccount.updateAccount(accountForUpdate);      
             await DatabaseOperationsAccount.updateAccount(accountForUpdate);      
             return res.status(201).json({});
         }
@@ -74,7 +82,8 @@ class AccountController{
 
     static async deleteAccount(req, res){
         const { id } = req.body;
-        const deleted = await DatabaseOperationsAccount.deleteAccount(id);
+        await DatabaseOperationsPgAccount.deleteAccount(id);
+        await DatabaseOperationsAccount.deleteAccount(id);
         
         res.status(201).json({success: 'deleted'});
     }
