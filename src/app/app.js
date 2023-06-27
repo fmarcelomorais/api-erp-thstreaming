@@ -27,7 +27,7 @@ app.use(
 );
 
 //Rotas
-app.get('/', (req, res) => res.json({message:'Api TH Streaming Runing'}));
+app.get('/', resetRouter);
 app.use('/user', userRouter);
 app.use('/client', clientRouter);
 app.use('/panel', panelRouter);

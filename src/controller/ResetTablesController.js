@@ -14,6 +14,10 @@ class ResetTables{
         return res.json({message:"Aborted"});
 
     }
+
+    static root(req, res) {
+        return res.json({message:'Api TH Streaming Runing'})
+    }
 }
 
 module.exports = ResetTables;
