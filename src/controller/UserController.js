@@ -1,21 +1,21 @@
 const jwt = require('jsonwebtoken');
-require('dotenv').config();
-const DataBaseOperationsUser = require('../databases/sqlite/DataBaseOperationsUser');
+//const DataBaseOperationsUser = require('../databases/sqlite/DataBaseOperationsUser');
 const DataBaseOperationPgUser = require('../databases/db_pg/DataBaseOperationPgUser');
 const UserModel = require('../model/UserModel.js');
+require('dotenv').config();
 
 class UserController{
 
     static async getAllUser(req, res){
         const usersPg = await DataBaseOperationPgUser.getAllUser();
-        const users = await DataBaseOperationsUser.getAllUser();
+        //const users = await DataBaseOperationsUser.getAllUser();
         res.json({users: usersPg});
     }
 
     static async getUser(req, res){
         const { id } = req.body
         const userPg = await DataBaseOperationPgUser.getUser(id);
-        const user = await DataBaseOperationsUser.getUser(id);
+       // const user = await DataBaseOperationsUser.getUser(id);
         res.json({user: userPg});
     }
 
@@ -25,9 +25,9 @@ class UserController{
         
         try {
             const registredPg = DataBaseOperationPgUser.createUser(newUser)
-            const registred = DataBaseOperationsUser.createUser(newUser);
+            //const registred = DataBaseOperationsUser.createUser(newUser);
          
-            if(registred && registredPg){
+            if(registredPg){
                 return res.status(201).json({message: 'Created'}); 
             }
             return res.status(400).json({message: 'Not Registered'});          
@@ -50,7 +50,7 @@ class UserController{
             userForUpdate.Password = password;
             userForUpdate.Key = key;
             
-            await DataBaseOperationsUser.updateUser(userForUpdate);    
+            //await DataBaseOperationsUser.updateUser(userForUpdate);    
             await DataBaseOperationPgUser.updateUser(userForUpdate);
 
             return res.status(201).json({});
@@ -63,7 +63,7 @@ class UserController{
         const { id } = req.body;
  
         await DataBaseOperationPgUser.deleteUser(id);
-        await DataBaseOperationsUser.deleteUser(id);
+       // await DataBaseOperationsUser.deleteUser(id);
         
         res.status(201).json({success: 'deleted'});
     }
@@ -71,11 +71,13 @@ class UserController{
     static async loginUser(req, res){
 
         const { login, password, key } = req.body;
-        const userLogin = await DataBaseOperationPgUser.loginUser(login, password, key);
-        if(userLogin){
+        const userPgLogin = await DataBaseOperationPgUser.loginUser(login, password, key);
+        //const userLogin = await DataBaseOperationsUser.loginUser(login, password, key);
+
+        if(userPgLogin.length > 0){
             const token = jwt.sign({
-                id: userLogin.Id,
-                type: userLogin.Type
+                id: userPgLogin.Id,
+                type: userPgLogin.Type
             }, process.env.SECRET_KEY, { expiresIn: '1h' });
             
             return res.json({'token': token});

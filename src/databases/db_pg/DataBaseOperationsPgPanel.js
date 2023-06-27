@@ -10,29 +10,30 @@ class DatabaseOperationPgPanel {
 
     static async getPanel(id){
         const db = await DatabaseOperationPg.openDbConnection();
-        const panel = await db.query(`SELECT * FROM tbl_Panels WHERE Id =$1;`, [id]);
+        const panel = await db.query(`SELECT * FROM tbl_Panels WHERE Id=$1;`, [id]);
         return panel.rows;
     }
 
     static async createPanel(panel){
+        console.log(panel);
         const db = await DatabaseOperationPg.openDbConnection();
-        const query =`INSERT INTO tbl_Panels (Id, Name, Login, Password, Url, Credits, Observation ) VALUES ( $1, $2, $3, $4, $5, $6, $7 );`;
-        const values = [panel.Id, panel.Name, panel.Login, panel.Password, panel.Url, panel.Credits, panel.Observation];
+        const query =`INSERT INTO tbl_Panels (Id, Name, Login, Password, Url, Credits, Observation, DateRegister, DatePaymentCredits, FK_Reseller ) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10 );`;
+        const values = [panel.Id, panel.Name, panel.Login, panel.Password, panel.Url, panel.Credits, panel.Observation, panel.DateRegister, panel.DatePaymentCredits, panel.FK_Reseller];
         const insert = await db.query(query, values);
         return insert;
 
     }
 
-    static async updateClient(panel) {
+    static async updatePanel(panel) {
         const db = await DatabaseOperationPg.openDbConnection();
 
-        const sql = `UPDATE tbl_Panels SET Id=$1, Name=$2, Login=$3, Password=$4, Url=$5, Credits=$6, Observation=$7 WHERE Id=$8;`;
-        const values = [panel.Id, panel.Name, panel.Login, panel.Password, panel.Url, panel.Credits, panel.Observation, panel.Id];    
+        const sql = `UPDATE tbl_Panels SET Id=$1, Name=$2, Login=$3, Password=$4, Url=$5, Credits=$6, DatePaymentCredits=$7, DateRegister=$8, Observation=$9, FK_Reseller=$10 WHERE Id=$11;`;
+        const values = [panel.Id, panel.Name, panel.Login, panel.Password, panel.Url, panel.Credits, panel.Observation, panel.DateRegister, panel.DatePaymentCredits, panel.FK_Reseller, panel.Id];   
         const update = await db.query(sql, values);
         return update;
     }
 
-    static async deleteClient(id) {
+    static async deletePanel(id) {
         const db = await DatabaseOperationPg.openDbConnection();
         await db.query(`DELETE FROM tbl_Panels WHERE Id=$1`,[id]);
         return deleted;

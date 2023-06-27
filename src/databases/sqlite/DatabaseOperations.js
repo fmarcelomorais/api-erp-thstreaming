@@ -44,7 +44,10 @@ class DatabaseOperation {
             Password VARCHAR(255) NOT NULL, \
             Url VARCHAR(255) NOT NULL, \
             Credits INTEGER NOT NULL, \
-            Observation VARCHAR(255) \
+            DatePaymentCredits DATE NOT NULL, \
+            DateRegister DATE NOT NULL,\
+            Observation VARCHAR(255), \
+            FK_Reseller VARCHAR(255) \
             )" 
         );
     }
@@ -57,10 +60,7 @@ class DatabaseOperation {
             Phone VARCHAR(30) NOT NULL, \
             Email VARCHAR(255) NOT NULL, \
             Observation VARCHAR(255), \
-            Credits INTEGER NOT NULL, \
-            DatePaymentCredits DATE NOT NULL, \
-            DateRegister DATE NOT NULL,\
-            FK_Panel VARCHAR(255) NOT NULL \
+            FK_Panel VARCHAR(255)\
             )" 
         );
     }
@@ -98,6 +98,36 @@ class DatabaseOperation {
         const db = await this.openDbConnection();
         await db.exec("ALTER TABLE tbl_Teste2 ADD FOREING KEY (FK_Teste1) REFERENCES tbl_Teste1 (id)"
         );
+    }
+
+    static async redoTables(force){
+        const db = await this.openDbConnection();
+        
+        const arrDeleteRows = [
+            'DELETE FROM tbl_Users WHERE Type > 1', 
+            'DELETE FROM tbl_Clients', 
+            'DELETE FROM tbl_Panels', 
+            'DELETE FROM tbl_Accounts', 
+            'DELETE FROM tbl_Resellers', 
+            'DELETE FROM tbl_Plans' 
+        ]
+     
+        const arrDropTables = [
+           // 'DROP TABLE tbl_Users', 
+            'DROP TABLE tbl_Clients', 
+            'DROP TABLE tbl_Panels', 
+            'DROP TABLE tbl_Accounts', 
+            'DROP TABLE tbl_Resellers', 
+            'DROP TABLE tbl_Plans' 
+        ]
+        for(let i = 0; i < arrDeleteRows.length; i++){
+            if(force){
+                await db.exec(arrDropTables[i]);
+            }else{
+                await db.exec(arrDeleteRows[i]);
+            }
+
+        }
     }
 }
 

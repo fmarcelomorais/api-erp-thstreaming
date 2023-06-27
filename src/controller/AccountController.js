@@ -1,4 +1,4 @@
-const DatabaseOperationsAccount = require('../databases/sqlite/DataBaseOperationsAccount');
+//const DatabaseOperationsAccount = require('../databases/sqlite/DataBaseOperationsAccount');
 const DatabaseOperationsPgAccount = require('../databases/db_pg/DataBaseOperationsPgAccount');
 const AccountModel = require('../model/AccountModel');
 
@@ -6,14 +6,14 @@ class AccountController{
 
     static async getAllAccounts(req, res){
         const acountsPg = await DatabaseOperationsPgAccount.getAllAccounts();
-        const acounts = await DatabaseOperationsAccount.getAllAccounts();
+        //const acounts = await DatabaseOperationsAccount.getAllAccounts();
         res.json({acounts: acountsPg});
     }
 
     static async getAccount(req, res){
         const { id } = req.body
         const accountPg = await DatabaseOperationsPgAccount.getAccount(id);
-        const account = await DatabaseOperationsAccount.getAccount(id);
+        //const account = await DatabaseOperationsAccount.getAccount(id);
         res.json({account: accountPg});
     }
 
@@ -21,11 +21,10 @@ class AccountController{
         const { accountDatas } = req;
 
         const existPg = await DatabaseOperationsPgAccount.getAccountIfExists(accountDatas.login, accountDatas.password);
-        const exist = await DatabaseOperationsAccount.getAccountIfExists(accountDatas.login, accountDatas.password);
-        console.log(exist, existPg)
-     /*    if(existPg && existPg) {
+       // const exist = await DatabaseOperationsAccount.getAccountIfExists(accountDatas.login, accountDatas.password);
+        if(existPg ) {
             return res.json({ message: `${accountDatas.login} Registered.` });
-        } */
+        } 
         const newAccount = new AccountModel(
             accountDatas.idClient,
             accountDatas.idPanel,
@@ -41,7 +40,7 @@ class AccountController{
         );
         try {
             const registredPg = DatabaseOperationsPgAccount.createAccount(newAccount);            
-            const registred = DatabaseOperationsAccount.createAccount(newAccount);            
+            //const registred = DatabaseOperationsAccount.createAccount(newAccount);            
             if(registredPg)
                 return res.status(201).json({message: 'Created'});   
             return res.status(400).json({message: 'Not Registered'});          
@@ -57,7 +56,7 @@ class AccountController{
             } = req.body;
 
         const accountForUpdatePg = await DatabaseOperationsPgAccount.getAccount(id);
-        const accountForUpdate = await DatabaseOperationsAccount.getAccount(id);
+      //  const accountForUpdate = await DatabaseOperationsAccount.getAccount(id);
 
         if(accountForUpdatePg){
             accountForUpdatePg.Id = id; 
@@ -73,7 +72,7 @@ class AccountController{
             accountForUpdatePg.DateExpiration = dateExpiration;
             
             await DatabaseOperationsPgAccount.updateAccount(accountForUpdate);      
-            await DatabaseOperationsAccount.updateAccount(accountForUpdate);      
+          //  await DatabaseOperationsAccount.updateAccount(accountForUpdate);      
             return res.status(201).json({});
         }
 
@@ -83,7 +82,7 @@ class AccountController{
     static async deleteAccount(req, res){
         const { id } = req.body;
         await DatabaseOperationsPgAccount.deleteAccount(id);
-        await DatabaseOperationsAccount.deleteAccount(id);
+       // await DatabaseOperationsAccount.deleteAccount(id);
         
         res.status(201).json({success: 'deleted'});
     }

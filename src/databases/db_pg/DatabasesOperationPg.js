@@ -18,7 +18,7 @@ class DatabasesOperationPg {
 
     static async createTableUser(){
         const db = await this.openDbConnection();
-        await db.query("CREATE TABLE IF NOT EXISTS tbl_users (\
+        await db.query("CREATE TABLE IF NOT EXISTS tbl_Users (\
                 Id VARCHAR(255) NOT NULL, \
                 Name VARCHAR(255) NOT NULL, \
                 Phone VARCHAR(30) NOT NULL, \
@@ -32,7 +32,7 @@ class DatabasesOperationPg {
 
     static async createTableClients(){
         const db = await this.openDbConnection();   
-        await db.query("CREATE TABLE IF NOT EXISTS tbl_clients (\
+        await db.query("CREATE TABLE IF NOT EXISTS tbl_Clients (\
             Id VARCHAR(255) NOT NULL, \
             Name VARCHAR(255) NOT NULL, \
             Phone VARCHAR(255) NOT NULL, \
@@ -50,7 +50,10 @@ class DatabasesOperationPg {
             Password VARCHAR(255) NOT NULL, \
             Url VARCHAR(255) NOT NULL, \
             Credits INTEGER NOT NULL, \
-            Observation VARCHAR(255) \
+            DatePaymentCredits DATE NOT NULL, \
+            DateRegister DATE NOT NULL,\
+            Observation VARCHAR(255), \
+            FK_Reseller VARCHAR(255) \
             )" 
         );
     }
@@ -63,10 +66,7 @@ class DatabasesOperationPg {
             Phone VARCHAR(30) NOT NULL, \
             Email VARCHAR(255) NOT NULL, \
             Observation VARCHAR(255), \
-            Credits INTEGER NOT NULL, \
-            DatePaymentCredits DATE NOT NULL, \
-            DateRegister DATE NOT NULL,\
-            FK_Panel VARCHAR(255) NOT NULL \
+            FK_Panel VARCHAR(255)\
             )" 
         );
     }
@@ -103,6 +103,36 @@ class DatabasesOperationPg {
     static async alterTable(){
         const db = await this.openDbConnection();
         await db.query("ALTER TABLE tbl_Teste2 ADD FOREING KEY (FK_Teste1) REFERENCES tbl_Teste1 (id)" );
+    }
+
+    static async redoTables(force){
+        const db = await this.openDbConnection();
+        
+        const arrDeleteRows = [
+            "DELETE FROM tbl_users WHERE type > 1", 
+            "DELETE FROM tbl_clients;", 
+            "DELETE FROM tbl_panels;", 
+            "DELETE FROM tbl_accounts;", 
+            "DELETE FROM tbl_resellers;", 
+            "DELETE FROM tbl_plans;" 
+        ]
+     
+        const arrDropTables = [
+            //"DROP TABLE tbl_users", 
+            "DROP TABLE tbl_clients;", 
+            "DROP TABLE tbl_panels;", 
+            "DROP TABLE tbl_accounts;", 
+            "DROP TABLE tbl_resellers;", 
+            "DROP TABLE tbl_plans;" 
+        ]
+        for(let i = 0; i < arrDeleteRows.length; i++){
+            if(force){
+                await db.query(arrDropTables[i]);
+            }else{
+                await db.query(arrDeleteRows[i]);
+            }
+
+        }
     }
 
 }

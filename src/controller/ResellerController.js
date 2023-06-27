@@ -1,19 +1,19 @@
 const DatabaseOperationsPgReseller = require('../databases/db_pg/DataBaseOperationsPgReseller');
-const DatabaseOperationsReseller = require('../databases/sqlite/DataBaseOperationsReseller');
+//const DatabaseOperationsReseller = require('../databases/sqlite/DataBaseOperationsReseller');
 const ResellerModel = require('../model/ResellerModel');
 
 class ResellerController{
 
     static async getAllResellers(req, res){
         const resellersPg = await DatabaseOperationsPgReseller.getAllResellers();
-        const resellers = await DatabaseOperationsReseller.getAllResellers();
+       // const resellers = await DatabaseOperationsReseller.getAllResellers();
         res.json({resellers: resellersPg});
     }
 
     static async getReseller(req, res){
         const { id } = req.body
         const resellerPg = await DatabaseOperationsPgReseller.getReseller(id);
-        const reseller = await DatabaseOperationsReseller.getReseller(id);
+        //const reseller = await DatabaseOperationsReseller.getReseller(id);
         res.json({reseller: resellerPg});
     }
 
@@ -25,15 +25,12 @@ class ResellerController{
             resellerDatas.phone,
             resellerDatas.email,
             resellerDatas.observation,
-            resellerDatas.credits,
-            resellerDatas.datePaymentCredits,
-            resellerDatas.dateRegister,
-            resellerDatas.idPanel,
+            resellerDatas.idPanel
         );
         
         try {
             const registredPg = DatabaseOperationsPgReseller.createReseller(newReseller);
-            const registred = DatabaseOperationsReseller.createReseller(newReseller);
+           // const registred = DatabaseOperationsReseller.createReseller(newReseller);
          
             if(registredPg)
                 return res.status(201).json({message: 'Created'});   
@@ -44,10 +41,10 @@ class ResellerController{
     }
 
     static async updateReseller(req, res){
-        const { id, name , phone, email, observation, credits, datepaymentcredits, dateregister, fk_panel } = req.body;
+        const { id, name , phone, email, observation, fk_panel } = req.body;
 
         const resellerForUpdatePg = await DatabaseOperationsPgReseller.getReseller(id);
-        const resellerForUpdate = await DatabaseOperationsReseller.getReseller(id);
+      //  const resellerForUpdate = await DatabaseOperationsReseller.getReseller(id);
 
         if(resellerForUpdatePg){
             resellerForUpdatePg.Id = id; 
@@ -55,13 +52,10 @@ class ResellerController{
             resellerForUpdatePg.Phone = phone;
             resellerForUpdatePg.Email = email;
             resellerForUpdatePg.Observation = observation;
-            resellerForUpdatePg.Credits = credits;
-            resellerForUpdatePg.DatePaymentCredits = datepaymentcredits;
-            resellerForUpdatePg.DateRegister = dateregister;
             resellerForUpdatePg.IdPanel = fk_panel;
             
             await DatabaseOperationsPgReseller.updateReseller(resellerForUpdatePg);      
-            await DatabaseOperationsReseller.updateReseller(resellerForUpdatePg);      
+          //  await DatabaseOperationsReseller.updateReseller(resellerForUpdatePg);      
             return res.status(201).json({});
         }
 
@@ -71,7 +65,7 @@ class ResellerController{
     static async deleteReseller(req, res){
         const { id } = req.body;
         await DatabaseOperationsPgReseller.deleteReseller(id);
-        await DatabaseOperationsReseller.deleteReseller(id);
+       // await DatabaseOperationsReseller.deleteReseller(id);
         
         res.status(201).json({success: 'deleted'});
     }

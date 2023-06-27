@@ -1,30 +1,29 @@
 const DataBaseOperationsPgPanel = require('../databases/db_pg/DataBaseOperationsPgPanel');
-const DataBaseOperationsPanel = require('../databases/sqlite/DataBaseOperationsPanel');
+//const DataBaseOperationsPanel = require('../databases/sqlite/DataBaseOperationsPanel');
 const PanelModel = require('../model/PanelModel.js');
 
 class PanelController{
 
     static async getAllPanels(req, res){
         const panelsPg = await DataBaseOperationsPgPanel.getAllPanels();
-        const panels = await DataBaseOperationsPanel.getAllPanels();
+       // const panels = await DataBaseOperationsPanel.getAllPanels();
         res.json({panels: panelsPg});
     }
 
     static async getPanel(req, res){
         const { id } = req.body
         const panelPg = await DataBaseOperationsPgPanel.getPanel(id);
-        const panel = await DataBaseOperationsPanel.getPanel(id);
+       // const panel = await DataBaseOperationsPanel.getPanel(id);
         res.json({panel: panelPg});
     }
 
     static async registerPanel(req, res){
         const { panelDatas } = req;
-        console.log(panelDatas);
-        const newPanel = new PanelModel(panelDatas.name, panelDatas.login, panelDatas.password, panelDatas.url, panelDatas.credits, panelDatas.observation);
-        console.log(newPanel);
+        const newPanel = new PanelModel(panelDatas.name, panelDatas.login, panelDatas.password, panelDatas.url, panelDatas.credits, panelDatas.observation, panelDatas.datePaymentCredits, panelDatas.dateRegister, panelDatas.idReseller );
+       
         try {
             const registredPg = DataBaseOperationsPgPanel.createPanel(newPanel);
-            const registred = DataBaseOperationsPanel.createPanel(newPanel);
+          //  const registred = DataBaseOperationsPanel.createPanel(newPanel);
          
             if(registredPg)
                 return res.status(201).json({message: 'Created'});   
@@ -38,7 +37,7 @@ class PanelController{
         const {name, login, password,  url, credits, observation} = req.body;
 
         const panelForUpdatePg = await DataBaseOperationsPgPanel.getPanel(id);
-        const panelForUpdate = await DataBaseOperationsPanel.getPanel(id);
+        //const panelForUpdate = await DataBaseOperationsPanel.getPanel(id);
 
         if(panelForUpdatePg){
             panelForUpdatePg.Name = name;
@@ -49,7 +48,7 @@ class PanelController{
             panelForUpdatePg.Observation = observation;
             
             await DataBaseOperationsPgPanel.updateUser(panelForUpdatePg);      
-            await DataBaseOperationsPanel.updateUser(panelForUpdatePg);      
+          //  await DataBaseOperationsPanel.updateUser(panelForUpdatePg);      
             return res.status(201).json({});
         }
 
@@ -59,7 +58,7 @@ class PanelController{
     static async deletePanel(req, res){
         const { id } = req.body;
         await DataBaseOperationsPgPanel.deletePanel(id);
-        await DataBaseOperationsPanel.deletePanel(id);
+       // await DataBaseOperationsPanel.deletePanel(id);
         
         res.status(201).json({success: 'deleted'});
     }

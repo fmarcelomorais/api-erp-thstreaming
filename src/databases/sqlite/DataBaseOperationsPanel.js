@@ -16,8 +16,8 @@ class DatabaseOperationsClient {
 
     static async createPanel(panel){
         const db = await DatabaseOperation.openDbConnection();
-        const query =`INSERT INTO tbl_Panels (Id, Name, Login, Password, Url, Credits, Observation ) 
-            VALUES ( "${panel.Id}", "${panel.Name}", "${panel.Login}", "${panel.Password}", "${panel.Url}", ${panel.Credits}, "${panel.Observation}" );`;
+        const query =`INSERT INTO tbl_Panels (Id, Name, Login, Password, Url, Credits, DatePaymentCredits, DateRegister, Observation, FK_Reseller )
+            VALUES ( "${panel.Id}", "${panel.Name}", "${panel.Login}", "${panel.Password}", "${panel.Url}", ${panel.Credits}, "${new Date(panel.DatePaymentCredits)}", "${new Date(panel.DateRegister)}", "${panel.Observation}", "${panel.IdReseller}");`;
         const insert = await db.exec(query);
         return insert;
 
@@ -33,7 +33,10 @@ class DatabaseOperationsClient {
             Observation = "${panel.Password}", 
             Url = "${panel.Url}", 
             Credits = "${panel.Credits}", 
-            Observation = "${panel.Observation}"
+            DatePaymentCredits = "${panel.DatePaymentCredits}", 
+            DatePaymentCredits = "${panel.DateRegister}", 
+            Observation = "${panel.Observation}",
+            FK_Reseller = "${panel.IdReseller}", 
             WHERE Id = ${panel.Id};`;
 
         const update = await db.exec(sql);

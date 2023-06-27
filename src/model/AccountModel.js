@@ -10,9 +10,9 @@ class AccountModel{
         this.Password = password;
         this.StatusPayment = statusPayment;
         this.StatusAccount = statusAccount;
-        this.DateMembership = dateMembership;
-        this.DateRenovation = dateRenovation;
-        this.DateExpiration = dateExpiration;
+        this.DateMembership = new Date(dateMembership);
+        this.DateRenovation = new Date(dateRenovation);
+        this.DateExpiration = new Date(dateExpiration);
     }
 }
 

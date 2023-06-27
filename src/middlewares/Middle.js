@@ -27,12 +27,23 @@ class Middle{
     }
 
     static verifyFieldsPanelIsEmpty(req, res, next) {
-        const { name, login, password,  url, credits, observation} = req.body;
+        const { name, login, password, url, credits, observation, datePaymentCredits, dateRegister, idReseller } = req.body;
 
-        if( !name || !login || !password || !url || !credits){
+        if( !name || !login || !password || !url || !credits || !datePaymentCredits || !dateRegister || !idReseller ) {
             return res.status(400).json({message:'All data needs to be filled in.'});  
         }
-        const panelDatas = {name: name, login: login, password: password,  url: url, credits: credits, observation: observation};
+        const panelDatas = {
+            name: name, 
+            login: login, 
+            password: password,  
+            url: url, 
+            credits: credits, 
+            observation: observation,
+            datePaymentCredits: datePaymentCredits, 
+            dateRegister: dateRegister,
+            idReseller: idReseller
+        };
+        
         req.panelDatas = panelDatas
         return next();
     }
@@ -74,8 +85,9 @@ class Middle{
     }
        
     static async verifyFieldsResellerIsEmpty(req, res, next) {
-        const { name , phone, email, observation, credits, datePaymentCredits, dateRegister, idPanel } = req.body;
-        if( !name || !phone || !email || !credits || !datePaymentCredits || !dateRegister || !idPanel){
+        const { name , phone, email, observation, idPanel } = req.body;
+        console.log(name , phone, email, observation, idPanel)
+        if( !name || !phone || !email ){
             return res.status(400).json({message:'All data needs to be filled in.'});      
         }
         const resellerDatas = {
@@ -83,10 +95,7 @@ class Middle{
             phone: phone, 
             email: email, 
             observation: observation, 
-            credits: credits, 
-            datePaymentCredits: datePaymentCredits, 
-            dateRegister: dateRegister, 
-            idPanel: idPanel,  
+            idPanel: idPanel  
         }
         
         req.resellerDatas = resellerDatas

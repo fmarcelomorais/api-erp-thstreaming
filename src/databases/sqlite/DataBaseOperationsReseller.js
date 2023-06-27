@@ -17,10 +17,9 @@ class DatabaseOperationsReseller {
     static async createReseller(reseller){
         const db = await DatabaseOperation.openDbConnection();
        
-        const values = `"${reseller.Id}", "${reseller.Name}", "${reseller.Phone}", "${reseller.Email}", "${reseller.Observation}",\
-            ${reseller.Credits}, ${reseller.DatePaymentCredits}, ${reseller.DateRegister}, "${reseller.IdPanel}" `
+        const values = `"${reseller.Id}", "${reseller.Name}", "${reseller.Phone}", "${reseller.Email}", "${reseller.Observation}", "${reseller.IdPanel}" `
              
-        const query =`INSERT INTO tbl_Resellers ( Id, Name, Phone, Email, Observation, Credits, DatePaymentCredits, DateRegister, FK_Panel) 
+        const query =`INSERT INTO tbl_Resellers ( Id, Name, Phone, Email, Observation, FK_Panel) 
             VALUES ( ${values} );`;
         const insert = await db.exec(query);
         return insert;
@@ -36,9 +35,6 @@ class DatabaseOperationsReseller {
             Phone = "${reseller.Phone}", 
             Email = "${reseller.Email}", 
             Observation = "${reseller.Observation}", 
-            Credits = ${reseller.Credits}, 
-            DatePaymentCredits = "${this.dateFormat(reseller.DatePaymentCredits)}", 
-            DateRegister = "${this.dateFormat(reseller.DateRegister)}", 
             FK_Panel = "${reseller.IdPanel}"
             WHERE Id = "${reseller.Id}";`;
 

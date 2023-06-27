@@ -1,5 +1,6 @@
 const express = require('express');
-require('../databases/databaseMethods');
+const DatabaseOperationsStart = require('../databases/databaseMethods');
+DatabaseOperationsStart();
 const cors = require('cors');
 const app = express();
 
@@ -9,6 +10,7 @@ const panelRouter = require('../router/PanelRouter.js');
 const planRouter = require('../router/PlanRouter.js');
 const accountRouter = require('../router/AccountRouter.js');
 const resellerRouter = require('../router/ResellerRouter.js');
+const resetRouter = require('../router/ResetRouter');
 
 //Middlewares
 app.use(express.urlencoded({extended: true}));
@@ -31,5 +33,6 @@ app.use('/panel', panelRouter);
 app.use('/plan', planRouter);
 app.use('/account', accountRouter);
 app.use('/reseller', resellerRouter);
+app.use('/', resetRouter);
 
 module.exports = app;
