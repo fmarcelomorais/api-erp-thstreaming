@@ -27,12 +27,13 @@ app.use(
 );
 
 //Rotas
+app.get('/', (req, res) => res.json({message:'Api TH Streaming Runing'}));
 app.use('/user', userRouter);
 app.use('/client', clientRouter);
 app.use('/panel', panelRouter);
 app.use('/plan', planRouter);
 app.use('/account', accountRouter);
 app.use('/reseller', resellerRouter);
-app.use('/', resetRouter);
+app.use('/api', resetRouter);
 
 module.exports = app;
