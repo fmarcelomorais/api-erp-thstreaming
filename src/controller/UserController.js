@@ -78,7 +78,7 @@ class UserController{
             const token = jwt.sign({
                 id: userPgLogin.Id,
                 type: userPgLogin.Type
-            }, process.env.SECRET_KEY, { expiresIn: '1h' });
+            }, process.env.SECRET_KEY, { expiresIn: '6h' });
             
             return res.json({'token': token});
         }
