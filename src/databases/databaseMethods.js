@@ -2,7 +2,7 @@
 const DatabasesOperationPg = require('./db_pg/DatabasesOperationPg')
 
 function DatabaseOperationsStart(){
-/*     DatabaseOperation.openDbConnection();    
+/*  DatabaseOperation.openDbConnection();    
     DatabaseOperation.createTableUser();
     DatabaseOperation.createTableClients();
     DatabaseOperation.createTablePanel();

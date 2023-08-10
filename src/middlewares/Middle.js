@@ -119,9 +119,9 @@ class Middle{
     
     static verifyFieldLogin(req, res, next) {
         const { login, password, type, key} = req.body;
+        console.log(type, login, password, key)
         
         if( !type || !login || !password || !key) {
-
             return res.status(400).json({message:'All data needs to be filled in.'});
         }
         const userLogin = {  login: login, password: password, type: type, key: key}

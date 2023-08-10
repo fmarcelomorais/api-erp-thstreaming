@@ -31,6 +31,31 @@
    * [DELETE] /user/delete
       - id
    
+   ---
+
+   - Conta
+      status da conta - [1] Ativo [2] Inativo [3] Bloqueado
+   * [HEADER]
+      - Authorization -> token liberado pela resposta da requisição no login de usuário.
+   
+   * [GET] /account/account
+      - id
+
+   * [GET] /user/users
+      - -
+
+   * [POST] /user/register
+      - name
+      - phone
+      - type [1] Master [2] Pro [3] Tester
+      - login
+      - password
+   * [PATCH] /user/update
+      - id
+
+   * [DELETE] /user/delete
+      - id
+   
 --
 ### Funcionalidade
 

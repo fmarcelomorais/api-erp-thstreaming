@@ -13,7 +13,8 @@ class UserController{
     }
 
     static async getUser(req, res){
-        const { id } = req.body
+        const id  = req.params['id']    
+        
         const userPg = await DataBaseOperationPgUser.getUser(id);
        // const user = await DataBaseOperationsUser.getUser(id);
         res.json({user: userPg});
@@ -78,7 +79,7 @@ class UserController{
             const token = jwt.sign({
                 id: userPgLogin.Id,
                 type: userPgLogin.Type
-            }, process.env.SECRET_KEY, { expiresIn: '1h' });
+            }, process.env.SECRET_KEY, { expiresIn: '6h' });
             
             return res.json({'token': token});
         }
