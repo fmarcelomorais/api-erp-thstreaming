@@ -33,30 +33,37 @@ class ClientController{
     }
 
     static async updateClient(req, res){
+      
         const {id, name, phone, observation} = req.body;
 
-        const userForUpdatePg = await DataBaseOperationPgClient.updateClient(id);
+        const userForUpdatePg = await DataBaseOperationPgClient.getClient(id);
        // const userForUpdate = await DatabaseOperationsClient.updateClient(id);
-
+        
         if(userForUpdatePg){
+            userForUpdatePg.Id = id;
             userForUpdatePg.Name = name;
             userForUpdatePg.Phone = phone;
-            userForUpdatePg.Observation = observation,  
+            userForUpdatePg.Observation = observation; 
             
             await DataBaseOperationPgClient.updateClient(userForUpdatePg);      
             //await DatabaseOperationsClient.updateClient(userForUpdate);      
-            return res.status(201).json({});
+            return res.status(201).json({'alterado':'Alterado'});
         }
 
         return res.status(401).json({message: 'id not found'});
     }
 
     static async deleteClient(req, res){
-        const { id } = req.body;
-        await DataBaseOperationPgClient.deleteClient(id);
-       // await DatabaseOperationsClient.deleteClient(id);
-        
-        res.status(201).json({success: 'deleted'});
+       const id = req.params['id'];
+       const deletado = await DataBaseOperationPgClient.deleteClient(id);
+       // await DatabaseOperationsClient.deleteClient(id);  
+       
+       if(deletado.rowCount == 1){
+           res.status(201).json({'status': 'Deletado'});
+       }else{
+           res.status(400).json({'status': 'Não Deletado'});
+       }      
+
     }
 
 }

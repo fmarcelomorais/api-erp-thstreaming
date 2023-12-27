@@ -19,13 +19,13 @@ class ResellerController{
 
     static async registerReseller(req, res){
         const { resellerDatas } = req;
-        
+        console.log(resellerDatas)
         const newReseller = new ResellerModel(
             resellerDatas.name,
             resellerDatas.phone,
             resellerDatas.email,
             resellerDatas.observation,
-            //resellerDatas.idPanel
+            resellerDatas.id_Panel
         );
         
         try {
@@ -41,7 +41,7 @@ class ResellerController{
     }
 
     static async updateReseller(req, res){
-        const { id, name , phone, email, observation } = req.body;
+        const { id, name , phone, email, observation, id_panel } = req.body;
 
         const resellerForUpdatePg = await DatabaseOperationsPgReseller.getReseller(id);
       //  const resellerForUpdate = await DatabaseOperationsReseller.getReseller(id);
@@ -52,7 +52,7 @@ class ResellerController{
             resellerForUpdatePg.Phone = phone;
             resellerForUpdatePg.Email = email;
             resellerForUpdatePg.Observation = observation;
-            //resellerForUpdatePg.IdPanel = fk_panel;
+            resellerForUpdatePg.Id_Panel = id_panel;
             
             await DatabaseOperationsPgReseller.updateReseller(resellerForUpdatePg);      
           //  await DatabaseOperationsReseller.updateReseller(resellerForUpdatePg);      

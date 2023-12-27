@@ -5,7 +5,7 @@ class Middle{
 
     static verifyFieldsUserIsEmpty(req, res, next){
         const {name, phone, type, login, password} = req.body;
-        console.log(name, phone, type, login, password)
+        //console.log(name, phone, type, login, password)
         if(!name || !phone || !type || !login || !password) {
 
             return res.status(400).json({message:'All data needs to be filled in.'});
@@ -18,7 +18,7 @@ class Middle{
     static verifyFieldsClientIsEmpty(req, res, next){
         const {name, phone, observation } = req.body;
         
-        if(!name || !phone || !observation ) {
+        if(!name || !phone ) {
             return res.status(400).json({message:'All data needs to be filled in.'});
         }
         const clientDatas = { name: name, phone: phone, observation: observation}
@@ -27,9 +27,9 @@ class Middle{
     }
 
     static verifyFieldsPanelIsEmpty(req, res, next) {
-        const { name, login, password, url, credits, observation, datePaymentCredits, dateRegister, idReseller } = req.body;
+        const { name, login, password, url, credits, observation, datePaymentCredits, dateRegister } = req.body;
 
-        if( !name || !login || !password || !url || !credits || !datePaymentCredits || !dateRegister || !idReseller ) {
+        if( !name || !login || !password || !url || !credits || !datePaymentCredits || !dateRegister ) {
             return res.status(400).json({message:'All data needs to be filled in.'});  
         }
         const panelDatas = {
@@ -40,8 +40,7 @@ class Middle{
             credits: credits, 
             observation: observation,
             datePaymentCredits: datePaymentCredits, 
-            dateRegister: dateRegister,
-            idReseller: idReseller
+            dateRegister: dateRegister
         };
         
         req.panelDatas = panelDatas
@@ -85,7 +84,7 @@ class Middle{
     }
        
     static async verifyFieldsResellerIsEmpty(req, res, next) {
-        const { name , phone, email, observation, idPanel } = req.body;
+        const { name , phone, email, observation, id_Panel } = req.body;
         if( !name || !phone || !email ){
             return res.status(400).json({message:'All data needs to be filled in.'});      
         }
@@ -94,7 +93,7 @@ class Middle{
             phone: phone, 
             email: email, 
             observation: observation, 
-            idPanel: idPanel  
+            id_Panel: id_Panel  
         }
         
         req.resellerDatas = resellerDatas

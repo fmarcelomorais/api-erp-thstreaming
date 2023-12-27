@@ -17,9 +17,9 @@ class DatabaseOperationsPgReseller {
     static async createReseller(reseller){
         const db = await DatabaseOperationPg.openDbConnection();       
         
-        const query =`INSERT INTO tbl_resellers ( Id, Name, Phone, Email, Observation, FK_Panel) 
+        const query =`INSERT INTO tbl_resellers ( Id, Name, Phone, Email, Observation, Id_Panel) 
         VALUES ( $1, $2, $3, $4, $5, $6 );`;
-        const values = [reseller.Id, reseller.Name, reseller.Phone, reseller.Email, reseller.Observation, reseller.IdPanel ]
+        const values = [reseller.Id, reseller.Name, reseller.Phone, reseller.Email, reseller.Observation, reseller.Id_Panel ]
         const insert = await db.query(query, values);
         return insert;
 
@@ -27,8 +27,8 @@ class DatabaseOperationsPgReseller {
 
     static async updateReseller(reseller) {
         const db = await DatabaseOperationPg.openDbConnection();
-        const sql = `UPDATE tbl_resellers SET Id=$1, Name=$2, Phone=$3, Email=$4, Observation=$5, FK_Panel=$6 WHERE Id=$7;`;
-        const values = [ reseller.Id, reseller.Name, reseller.Phone, reseller.Email, reseller.Observation, reseller.IdPanel, reseller.Id ];
+        const sql = `UPDATE tbl_resellers SET Id=$1, Name=$2, Phone=$3, Email=$4, Observation=$5, Id_Panel=$6 WHERE Id=$7;`;
+        const values = [ reseller.Id, reseller.Name, reseller.Phone, reseller.Email, reseller.Observation, reseller.Id_Panel, reseller.Id ];
         const update = await db.query(sql, values);
         return update;
     }

@@ -19,7 +19,8 @@ class PanelController{
 
     static async registerPanel(req, res){
         const { panelDatas } = req;
-        const newPanel = new PanelModel(panelDatas.name, panelDatas.login, panelDatas.password, panelDatas.url, panelDatas.credits, panelDatas.observation, panelDatas.datePaymentCredits, panelDatas.dateRegister, panelDatas.idReseller );
+        console.log(panelDatas)
+        const newPanel = new PanelModel(panelDatas.name, panelDatas.login, panelDatas.password, panelDatas.url, panelDatas.credits, panelDatas.observation, panelDatas.datePaymentCredits, panelDatas.dateRegister );
        
         try {
             const registredPg = DataBaseOperationsPgPanel.createPanel(newPanel);

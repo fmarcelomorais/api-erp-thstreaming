@@ -52,8 +52,7 @@ class DatabasesOperationPg {
             Credits INTEGER NOT NULL, \
             DatePaymentCredits DATE NOT NULL, \
             DateRegister DATE NOT NULL,\
-            Observation VARCHAR(255), \
-            FK_Reseller VARCHAR(255) \
+            Observation VARCHAR(255)\
             )" 
         );
     }
@@ -65,7 +64,8 @@ class DatabasesOperationPg {
             Name VARCHAR(255) NOT NULL, \
             Phone VARCHAR(30) NOT NULL, \
             Email VARCHAR(255) NOT NULL, \
-            Observation VARCHAR(255)\
+            Observation VARCHAR(255),\
+            Id_Panel VARCHAR(255) \
             )" 
         );
     }

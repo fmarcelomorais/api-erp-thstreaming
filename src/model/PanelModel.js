@@ -1,7 +1,7 @@
 const {v4: uuidv4} = require('uuid');
 class PanelModel{
         Id = uuidv4();  
-    constructor(name, login, password, url, credits, observation, datePaymentCredits, dateRegister, idReseller){
+    constructor(name, login, password, url, credits, observation, datePaymentCredits, dateRegister){
         this.Name = name;
         this.Login = login;
         this.Password = password;
@@ -10,7 +10,7 @@ class PanelModel{
         this.Observation = observation;
         this.DatePaymentCredits = new Date(datePaymentCredits);
         this.DateRegister = new Date(dateRegister); 
-        this.FK_Reseller = idReseller;
+        //this.FK_Reseller = idReseller;
     }
 }
 
