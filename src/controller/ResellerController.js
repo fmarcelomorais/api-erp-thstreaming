@@ -11,7 +11,7 @@ class ResellerController{
     }
 
     static async getReseller(req, res){
-        const { id } = req.body
+        const id = req.params['id']
         const resellerPg = await DatabaseOperationsPgReseller.getReseller(id);
         //const reseller = await DatabaseOperationsReseller.getReseller(id);
         res.json({reseller: resellerPg});
@@ -25,7 +25,7 @@ class ResellerController{
             resellerDatas.phone,
             resellerDatas.email,
             resellerDatas.observation,
-            resellerDatas.idPanel
+            //resellerDatas.idPanel
         );
         
         try {
@@ -41,7 +41,7 @@ class ResellerController{
     }
 
     static async updateReseller(req, res){
-        const { id, name , phone, email, observation, fk_panel } = req.body;
+        const { id, name , phone, email, observation } = req.body;
 
         const resellerForUpdatePg = await DatabaseOperationsPgReseller.getReseller(id);
       //  const resellerForUpdate = await DatabaseOperationsReseller.getReseller(id);
@@ -52,18 +52,18 @@ class ResellerController{
             resellerForUpdatePg.Phone = phone;
             resellerForUpdatePg.Email = email;
             resellerForUpdatePg.Observation = observation;
-            resellerForUpdatePg.IdPanel = fk_panel;
+            //resellerForUpdatePg.IdPanel = fk_panel;
             
             await DatabaseOperationsPgReseller.updateReseller(resellerForUpdatePg);      
           //  await DatabaseOperationsReseller.updateReseller(resellerForUpdatePg);      
-            return res.status(201).json({});
+            return res.status(201).json({message: "Changed"});
         }
 
         return res.status(401).json({message: 'id not found'});
     }
 
     static async deleteReseller(req, res){
-        const { id } = req.body;
+        const id = req.params['id'];
         await DatabaseOperationsPgReseller.deleteReseller(id);
        // await DatabaseOperationsReseller.deleteReseller(id);
         

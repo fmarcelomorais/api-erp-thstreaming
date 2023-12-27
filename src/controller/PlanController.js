@@ -11,8 +11,9 @@ class PlanController{
     }
 
     static async getPlan(req, res){
-        const { id } = req.body
+        const id = req.params['id'];
         const planPg = await DataBaseOperationsPgPlan.getPlan(id);
+        
         //const plan = await DataBaseOperationsPlan.getPlan(id);
         res.json({plan: planPg});
     }
@@ -37,14 +38,14 @@ class PlanController{
 
         const planForUpdatePg = await DataBaseOperationsPgPlan.getPlan(id);
        // const planForUpdate = await DataBaseOperationsPlan.getPlan(id);
-
-        if(planForUpdatePg){
+       if(planForUpdatePg){
+            planForUpdatePg.Id = id;
             planForUpdatePg.Name = name;
             planForUpdatePg.Amount = amount;
-            
+
             await DataBaseOperationsPgPlan.updatePlan(planForUpdatePg);      
             //await DataBaseOperationsPlan.updatePlan(planForUpdate);      
-            return res.status(201).json({});
+            return res.status(201).json({message: 'Alterado'});
         }
 
         return res.status(401).json({message: 'id not found'});

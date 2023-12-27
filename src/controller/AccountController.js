@@ -7,11 +7,12 @@ class AccountController{
     static async getAllAccounts(req, res){
         const acountsPg = await DatabaseOperationsPgAccount.getAllAccounts();
         //const acounts = await DatabaseOperationsAccount.getAllAccounts();
-        res.json({acounts: acountsPg});
+        console.log(acountsPg)
+        res.json({accounts: acountsPg});
     }
 
     static async getAccount(req, res){
-        const { id } = req.body
+        const  id = req.params['id']
         const accountPg = await DatabaseOperationsPgAccount.getAccount(id);
         //const account = await DatabaseOperationsAccount.getAccount(id);
         res.json({account: accountPg});
@@ -29,7 +30,7 @@ class AccountController{
             accountDatas.idClient,
             accountDatas.idPanel,
             accountDatas.idPlan,
-            accountDatas.idReseller,
+            //accountDatas.idReseller,
             accountDatas.login,
             accountDatas.password,
             accountDatas.statusPayment,
@@ -62,7 +63,7 @@ class AccountController{
             accountForUpdatePg.Id = id; 
             accountForUpdatePg.IdClient = idClient;
             accountForUpdatePg.IdPanel = idPanel;
-            accountForUpdatePg.IdPanel = idPlan; 
+            accountForUpdatePg.IdPlan = idPlan; 
             accountForUpdatePg.Login = login; 
             accountForUpdatePg.Password = password;
             accountForUpdatePg.StatusPayment = statusPayment; 
@@ -71,7 +72,7 @@ class AccountController{
             accountForUpdatePg.DateRenovation = dateRenovation; 
             accountForUpdatePg.DateExpiration = dateExpiration;
             
-            await DatabaseOperationsPgAccount.updateAccount(accountForUpdate);      
+            await DatabaseOperationsPgAccount.updateAccount(accountForUpdatePg);      
           //  await DatabaseOperationsAccount.updateAccount(accountForUpdate);      
             return res.status(201).json({});
         }
@@ -80,7 +81,7 @@ class AccountController{
     }
 
     static async deleteAccount(req, res){
-        const { id } = req.body;
+        const  id = req.params['id'];
         await DatabaseOperationsPgAccount.deleteAccount(id);
        // await DatabaseOperationsAccount.deleteAccount(id);
         

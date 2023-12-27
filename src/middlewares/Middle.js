@@ -61,17 +61,17 @@ class Middle{
 
     static verifyFieldsAccountIsEmpty(req, res, next) {
 
-        const { idClient , idPanel, idPlan, idReseller, login, password, statusPayment, 
+        const { idClient , idPanel, idPlan, login, password, statusPayment, 
             statusAccount, dateMembership, dateRenovation, dateExpiration } = req.body
 
-        if( !idClient || !idPanel || !idPlan || !idReseller || !login || !password || !statusPayment || !statusAccount || !dateMembership || !dateRenovation || !dateExpiration ){
+        if( !idClient || !idPanel || !idPlan || !login || !password || !statusPayment || !statusAccount || !dateMembership || !dateRenovation || !dateExpiration ){
             return res.status(400).json({message:'All data needs to be filled in.'});  
         }
         const accountDatas = { 
             idClient: idClient, 
             idPanel: idPanel, 
             idPlan: idPlan,  
-            idReseller: idReseller,  
+            //idReseller: idReseller,  
             login: login, 
             password: password, 
             statusPayment: statusPayment, 
@@ -86,7 +86,6 @@ class Middle{
        
     static async verifyFieldsResellerIsEmpty(req, res, next) {
         const { name , phone, email, observation, idPanel } = req.body;
-        console.log(name , phone, email, observation, idPanel)
         if( !name || !phone || !email ){
             return res.status(400).json({message:'All data needs to be filled in.'});      
         }
@@ -114,13 +113,13 @@ class Middle{
             return res.status(401);
         } 
         
+
         return next();
     }
     
     static verifyFieldLogin(req, res, next) {
         const { login, password, type, key} = req.body;
-        console.log(type, login, password, key)
-        
+                
         if( !type || !login || !password || !key) {
             return res.status(400).json({message:'All data needs to be filled in.'});
         }

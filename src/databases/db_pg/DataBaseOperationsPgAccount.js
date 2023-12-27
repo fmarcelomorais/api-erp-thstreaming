@@ -10,7 +10,7 @@ class DatabaseOperationsPgAccount {
 
     static async getAccount(id){
         const db = await DatabaseOperationPg.openDbConnection();
-        const account = await db.query(`SELECT * FROM tbl_Account WHERE Id = $1;`, [1]);
+        const account = await db.query(`SELECT * FROM tbl_Accounts WHERE Id = $1;`, [1]);
         return account.rows;
     }
 

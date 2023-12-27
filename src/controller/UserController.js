@@ -61,7 +61,7 @@ class UserController{
     }
 
     static async deleteUser(req, res){
-        const { id } = req.body;
+        const id = req.params['id'];
  
         await DataBaseOperationPgUser.deleteUser(id);
        // await DataBaseOperationsUser.deleteUser(id);
@@ -79,7 +79,7 @@ class UserController{
             const token = jwt.sign({
                 id: userPgLogin.Id,
                 type: userPgLogin.Type
-            }, process.env.SECRET_KEY, { expiresIn: '6h' });
+            }, process.env.SECRET_KEY, { expiresIn: '1h' });
             
             return res.json({'token': token});
         }

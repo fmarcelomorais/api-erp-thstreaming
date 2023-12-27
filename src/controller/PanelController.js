@@ -11,7 +11,7 @@ class PanelController{
     }
 
     static async getPanel(req, res){
-        const { id } = req.body
+        const  id = req.params['id']
         const panelPg = await DataBaseOperationsPgPanel.getPanel(id);
        // const panel = await DataBaseOperationsPanel.getPanel(id);
         res.json({panel: panelPg});

@@ -11,7 +11,7 @@ class ClientController{
     }
 
     static async getClient(req, res){
-        const { id } = req.body
+        const  id = req.params['id']
         const clientPg = await DataBaseOperationPgClient.getClient(id);
        // const client = await DatabaseOperationsClient.getClient(id);
         res.json({client: clientPg});
@@ -33,7 +33,7 @@ class ClientController{
     }
 
     static async updateClient(req, res){
-        const {id, name, observation} = req.body;
+        const {id, name, phone, observation} = req.body;
 
         const userForUpdatePg = await DataBaseOperationPgClient.updateClient(id);
        // const userForUpdate = await DatabaseOperationsClient.updateClient(id);

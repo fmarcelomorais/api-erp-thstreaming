@@ -10,7 +10,8 @@ class DataBaseOperationPgClient {
 
     static async getClient(id){
         const db = await DatabaseOperationPg.openDbConnection();
-        const client = await db.query(`SELECT * FROM tbl_users WHERE id=$1;`,[id]);
+        const client = await db.query(`SELECT * FROM tbl_clients WHERE id=$1;`,[id]);
+        console.log(client);
         return client.rows;
     }
 
@@ -28,7 +29,7 @@ class DataBaseOperationPgClient {
 
         const db = await DatabaseOperationPg.openDbConnection();
 
-        const sql = `UPDATE tbl_users SET id=$1, name=$2, phone=$3, observation=$4 WHERE id=$5;`;
+        const sql = `UPDATE tbl_clients SET id=$1, name=$2, phone=$3, observation=$4 WHERE id=$5;`;
         const values = [client.Id, client.Name, client.Phone, client.Observation, client.Id]
         const update = await db.query(sql, values);
         return update;
@@ -37,7 +38,7 @@ class DataBaseOperationPgClient {
     static async deleteUser(id) {
    
         const db = await DatabaseOperationPg.openDbConnection();
-        const deleted = await db.query(`DELETE FROM tbl_users WHERE id=$1;`, [id]);
+        const deleted = await db.query(`DELETE FROM tbl_clients WHERE id=$1;`, [id]);
         return deleted;
     }
 

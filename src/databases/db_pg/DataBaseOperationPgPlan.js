@@ -26,7 +26,7 @@ class DatabaseOperationPgPlan {
     static async updatePlan(plan) {
         const db = await DatabaseOperationPg.openDbConnection();
 
-        const sql = `UPDATE tbl_Plans SET Id=$1, Name=$2, Phone=$3 WHERE Id=$4;`;
+        const sql = `UPDATE tbl_Plans SET Id=$1, Name=$2, Amount=$3 WHERE Id=$4;`;
         const values = [plan.Id, plan.Name, plan.Amount, plan.Id]
         const update = await db.query(sql, values);
         return update;

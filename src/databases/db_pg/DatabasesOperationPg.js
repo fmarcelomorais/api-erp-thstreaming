@@ -65,8 +65,7 @@ class DatabasesOperationPg {
             Name VARCHAR(255) NOT NULL, \
             Phone VARCHAR(30) NOT NULL, \
             Email VARCHAR(255) NOT NULL, \
-            Observation VARCHAR(255), \
-            FK_Panel VARCHAR(255)\
+            Observation VARCHAR(255)\
             )" 
         );
     }
@@ -77,7 +76,6 @@ class DatabasesOperationPg {
             Id VARCHAR(255) NOT NULL, \
             FK_Client VARCHAR(255) NOT NULL, \
             FK_Panel VARCHAR(255) NOT NULL, \
-            FK_Reseller VARCHAR(255) NOT NULL, \
             Login VARCHAR(255) NOT NULL, \
             Password VARCHAR(255) NOT NULL, \
             StatusPayment VARCHAR(25), \
@@ -119,11 +117,11 @@ class DatabasesOperationPg {
      
         const arrDropTables = [
             //"DROP TABLE tbl_users", 
-            "DROP TABLE tbl_clients;", 
-            "DROP TABLE tbl_panels;", 
-            "DROP TABLE tbl_accounts;", 
-            "DROP TABLE tbl_resellers;", 
-            "DROP TABLE tbl_plans;" 
+            "DROP TABLE tbl_clients", 
+            "DROP TABLE tbl_panels", 
+            "DROP TABLE tbl_accounts", 
+            "DROP TABLE tbl_resellers", 
+            "DROP TABLE tbl_plans" 
         ]
         for(let i = 0; i < arrDeleteRows.length; i++){
             if(force){
@@ -131,10 +129,8 @@ class DatabasesOperationPg {
             }else{
                 await db.query(arrDeleteRows[i]);
             }
-
         }
     }
-
 }
 
 module.exports = DatabasesOperationPg;

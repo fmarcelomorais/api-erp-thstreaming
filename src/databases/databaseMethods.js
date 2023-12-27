@@ -10,7 +10,7 @@ function DatabaseOperationsStart(){
     DatabaseOperation.createTableAccount();
     DatabaseOperation.createTablePlan(); */
 
-// Database Neon - Postgre
+// Database Neon - PostgreSQL
 
     DatabasesOperationPg.openDbConnection();
     DatabasesOperationPg.createTableUser();
