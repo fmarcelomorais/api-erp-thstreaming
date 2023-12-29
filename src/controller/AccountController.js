@@ -7,7 +7,6 @@ class AccountController{
     static async getAllAccounts(req, res){
         const acountsPg = await DatabaseOperationsPgAccount.getAllAccounts();
         //const acounts = await DatabaseOperationsAccount.getAllAccounts();
-        console.log(acountsPg)
         res.json({accounts: acountsPg});
     }
 

@@ -6,6 +6,6 @@ accountRouter.get('/accounts', Middle.verifyAuthentication, AccountController.ge
 accountRouter.get('/account/:id', Middle.verifyAuthentication, AccountController.getAccount)
 accountRouter.post('/register', Middle.verifyAuthentication, Middle.verifyFieldsAccountIsEmpty, AccountController.registerAccount);
 accountRouter.patch('/update', Middle.verifyAuthentication, AccountController.updateAccount);
-accountRouter.delete('/delete', Middle.verifyAuthentication, AccountController.deleteAccount);
+accountRouter.delete('/delete/:id', Middle.verifyAuthentication, AccountController.deleteAccount);
 
 module.exports = accountRouter;

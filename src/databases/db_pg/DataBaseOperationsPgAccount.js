@@ -26,9 +26,9 @@ class DatabaseOperationsPgAccount {
 
     static async createAccount(account){
         const db = await DatabaseOperationPg.openDbConnection();
-        const query =`INSERT INTO tbl_Accounts (Id, FK_Client, FK_Panel, FK_Plan, FK_Reseller, Login, Password, StatusPayment, StatusAccount, DateMembership, DateRenovation, DateExpiration ) 
-        VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12 );`;
-        const values = [account.Id, account.IdClient, account.IdPanel, account.IdPlan, account.IdReseller, account.Login, account.Password, account.StatusPayment, account.StatusAccount, account.DateMembership, account.DateRenovation, account.DateExpiration]     
+        const query =`INSERT INTO tbl_Accounts (Id, FK_Client, FK_Panel, FK_Plan, Login, Password, StatusPayment, StatusAccount, DateMembership, DateRenovation, DateExpiration ) 
+        VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11 );`;
+        const values = [account.Id, account.IdClient, account.IdPanel, account.IdPlan, account.Login, account.Password, account.StatusPayment, account.StatusAccount, account.DateMembership, account.DateRenovation, account.DateExpiration]     
         const insert = await db.query(query, values);
         return insert;
 
@@ -46,7 +46,7 @@ class DatabaseOperationsPgAccount {
 
     static async deleteAccount(id) {
         const db = await DatabaseOperationPg.openDbConnection();
-        const deleted = await db.exec(`DELETE FROM tbl_Accounts WHERE Id=$1`, [id]);
+        const deleted = await db.query(`DELETE FROM tbl_Accounts WHERE Id=$1`, [id]);
         return deleted;
     }
 

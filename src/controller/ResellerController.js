@@ -19,7 +19,7 @@ class ResellerController{
 
     static async registerReseller(req, res){
         const { resellerDatas } = req;
-        console.log(resellerDatas)
+        
         const newReseller = new ResellerModel(
             resellerDatas.name,
             resellerDatas.phone,

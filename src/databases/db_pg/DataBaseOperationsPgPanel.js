@@ -15,7 +15,7 @@ class DatabaseOperationPgPanel {
     }
 
     static async createPanel(panel){
-        console.log(panel);
+        
         const db = await DatabaseOperationPg.openDbConnection();
         const query =`INSERT INTO tbl_Panels (Id, Name, Login, Password, Url, Credits, Observation, DateRegister, DatePaymentCredits ) VALUES ( $1, $2, $3, $4, $5, $6, $7, $8, $9 );`;
         const values = [panel.Id, panel.Name, panel.Login, panel.Password, panel.Url, panel.Credits, panel.Observation, panel.DateRegister, panel.DatePaymentCredits];

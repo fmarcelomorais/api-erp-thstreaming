@@ -19,7 +19,7 @@ class PanelController{
 
     static async registerPanel(req, res){
         const { panelDatas } = req;
-        console.log(panelDatas)
+        
         const newPanel = new PanelModel(panelDatas.name, panelDatas.login, panelDatas.password, panelDatas.url, panelDatas.credits, panelDatas.observation, panelDatas.datePaymentCredits, panelDatas.dateRegister );
        
         try {
