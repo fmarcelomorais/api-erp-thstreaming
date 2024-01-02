@@ -4,7 +4,11 @@ class DatabaseOperationsPgAccount {
 
     static async getAllAccounts(){
         const db = await DatabaseOperationPg.openDbConnection();
-        const sql = `SELECT conta.*, cliente.*, painel.*, plano.* 
+        const sql = `SELECT conta.id, conta.fk_client, conta.fk_panel, conta.fk_plan,
+        conta.login as loginConta, conta.password as senhaConta, conta.statusPayment, conta.statusAccount, conta.DateMembership, conta.DateRenovation, conta.DateExpiration,
+        cliente.name, cliente.phone, cliente.observation,
+        painel.name as nomePainel, painel.login as loginPainel, painel.password as senhaPainel, painel.url, painel.credits, painel.DatePaymentCredits, painel.DateRegister,
+        plano.name as nomePlano, plano.amount 
         FROM tbl_accounts as conta
         INNER JOIN tbl_clients as cliente on (conta.fk_client = cliente.id)
         INNER JOIN tbl_panels as painel on (conta.fk_panel = painel.id) 
@@ -16,7 +20,11 @@ class DatabaseOperationsPgAccount {
 
     static async getAccount(id){
         const db = await DatabaseOperationPg.openDbConnection();
-        const sql = `SELECT conta.*, cliente.*, painel.*, plano.* 
+        const sql = `SELECT conta.id, conta.fk_client, conta.fk_panel, conta.fk_plan,
+        conta.login as loginConta, conta.password as senhaConta, conta.statusPayment, conta.statusAccount, conta.DateMembership, conta.DateRenovation, conta.DateExpiration,
+        cliente.name, cliente.phone, cliente.observation,
+        painel.name as nomePainel, painel.login as loginPainel, painel.password as senhaPainel, painel.url, painel.credits, painel.DatePaymentCredits, painel.DateRegister,
+        plano.name as nomePlano, plano.amount 
         FROM tbl_accounts as conta
         INNER JOIN tbl_clients as cliente on (conta.fk_client = cliente.id)
         INNER JOIN tbl_panels as painel on (conta.fk_panel = painel.id) 
