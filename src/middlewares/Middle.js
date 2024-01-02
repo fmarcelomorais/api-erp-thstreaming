@@ -21,7 +21,7 @@ class Middle{
         if(!name || !phone ) {
             return res.status(400).json({message:'All data needs to be filled in.'});
         }
-        const clientDatas = { name: name, phone: phone, observation: observation}
+        const clientDatas = { name: name, phone: phone}
         req.clientDatas = clientDatas;
         return  next();
     }
