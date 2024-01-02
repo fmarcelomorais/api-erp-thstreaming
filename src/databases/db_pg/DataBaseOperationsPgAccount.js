@@ -10,7 +10,15 @@ class DatabaseOperationsPgAccount {
 
     static async getAccount(id){
         const db = await DatabaseOperationPg.openDbConnection();
-        const account = await db.query(`SELECT * FROM tbl_Accounts WHERE Id = $1;`, [1]);
+        const sql = `SELECT conta.*, cliente.*, painel.*, plano.* 
+        FROM tbl_accounts as conta
+        INNER JOIN tbl_clients as cliente on (conta.fk_client = cliente.id)
+        INNER JOIN tbl_panels as painel on (conta.fk_panel = painel.id) 
+        INNER JOIN tbl_plans as plano on (conta.fk_plan = plano.id)
+        WHERE conta.Id = $1;       
+        `
+        const account = await db.query(sql, [id]);
+            console.log(sql)
         return account.rows;
     }
 
