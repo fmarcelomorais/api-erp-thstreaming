@@ -18,7 +18,6 @@ class DatabaseOperationsPgAccount {
         WHERE conta.Id = $1;       
         `
         const account = await db.query(sql, [id]);
-            console.log(sql)
         return account.rows;
     }
 
