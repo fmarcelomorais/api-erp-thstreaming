@@ -4,7 +4,13 @@ class DatabaseOperationsPgAccount {
 
     static async getAllAccounts(){
         const db = await DatabaseOperationPg.openDbConnection();
-        const resellers = await db.query("SELECT * FROM tbl_Accounts");
+        const sql = `SELECT conta.*, cliente.*, painel.*, plano.* 
+        FROM tbl_accounts as conta
+        INNER JOIN tbl_clients as cliente on (conta.fk_client = cliente.id)
+        INNER JOIN tbl_panels as painel on (conta.fk_panel = painel.id) 
+        INNER JOIN tbl_plans as plano on (conta.fk_plan = plano.id);       
+        `
+        const resellers = await db.query(sql);
         return resellers.rows;
     }
 
