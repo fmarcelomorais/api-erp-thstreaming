@@ -58,10 +58,11 @@ class DatabaseOperationsPgAccount {
     static async updateAccount(account) {
         const db = await DatabaseOperationPg.openDbConnection();
 
-        const sql = `UPDATE tbl_Accounts SET Id=$1, FK_Client=$2, FK_Panel=$3, FK_Plan=$4, FK_Reseller=$5, Login=$6, Password=$7,
-            StatusPayment=$8, StatusAccount=$9, DateMembership=$10, DateRenovation=$11, DateExpiration=$12 WHERE Id=$13;`;
-        const values = [account.Id, account.IdClient, account.IdPanel, account.IdPlan, account.IdReseller, account.Login, account.Password, account.StatusPayment, account.StatusAccount, account.DateMembership, account.DateRenovation, account.DateExpiration, account.Id]     
+        const sql = `UPDATE tbl_Accounts SET Id=$1, FK_Client=$2, FK_Panel=$3, FK_Plan=$4, Login=$5, Password=$6,
+            StatusPayment=$7, StatusAccount=$8, DateMembership=$9, DateRenovation=$10, DateExpiration=$11 WHERE Id=$12;`;
+        const values = [account.Id, account.IdClient, account.IdPanel, account.IdPlan, account.Login, account.Password, account.StatusPayment, account.StatusAccount, account.DateMembership, account.DateRenovation, account.DateExpiration, account.Id]     
         const update = await db.query(sql, values);
+       
         return update;
     }
 

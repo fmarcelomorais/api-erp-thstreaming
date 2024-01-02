@@ -52,7 +52,7 @@ class AccountController{
     static async updateAccount(req, res){
         const { 
                 id, idClient , idPanel, idPlan, login, password, statusPayment, 
-                statusAccount, dateMembership, dateRenovation, dateExpiration 
+                statusAccount, dateMembership, dateRenovation, dateExpiration, observation 
             } = req.body;
 
         const accountForUpdatePg = await DatabaseOperationsPgAccount.getAccount(id);
@@ -73,7 +73,7 @@ class AccountController{
             
             await DatabaseOperationsPgAccount.updateAccount(accountForUpdatePg);      
           //  await DatabaseOperationsAccount.updateAccount(accountForUpdate);      
-            return res.status(201).json({});
+            return res.status(201).json({status: "ok"});
         }
 
         return res.status(401).json({message: 'id not found'});
